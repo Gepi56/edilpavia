@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdilPavia · Dettaglio Servizio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #f9fafc;
+            color: #1e2b37;
+            line-height: 1.5;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header identico */
+        header {
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0b3b5c;
+        }
+        .logo i {
+            color: #f5a623;
+            font-size: 2.2rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .nav-links a:hover {
+            color: #0b3b5c;
+            border-bottom: 2px solid #f5a623;
+        }
+        .btn-registrati {
+            background: #0b3b5c;
+            color: #fff !important;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        .btn-registrati:hover {
+            background: #124f73;
+        }
+        /* Footer identico */
+        footer {
+            background: #102a37;
+            color: #d0dee9;
+            padding: 48px 0 24px;
+            border-radius: 40px 40px 0 0;
+            margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-col h4 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .footer-col p,
+        .footer-col a {
+            color: #b0c4d9;
+            line-height: 2;
+        }
+        .footer-col i {
+            width: 24px;
+            color: #f5a623;
+        }
+        .social-icons {
+            display: flex;
+            gap: 18px;
+            margin-top: 16px;
+        }
+        .social-icons a {
+            background: #1f4055;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .social-icons a:hover {
+            background: #f5a623;
+            color: #0b3b5c;
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid #2a4a5e;
+            font-size: 0.9rem;
+        }
+
+        /* Stili pagina dettaglio */
+        .detail-page {
+            padding: 60px 0;
+        }
+        .detail-card {
+            background: white;
+            border-radius: 40px;
+            padding: 48px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f6;
+        }
+        .detail-icon {
+            font-size: 4rem;
+            color: #f5a623;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .detail-title {
+            font-size: 2.5rem;
+            color: #0b3b5c;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .detail-description {
+            font-size: 1.1rem;
+            color: #4a5b68;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #f5a623;
+            font-weight: 600;
+        }
+        .back-link i {
+            margin-right: 8px;
+        }
+        /* Mini form per preventivo rapido */
+        .quick-form {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f5f8fb;
+            border-radius: 30px;
+        }
+        .quick-form h3 {
+            margin-bottom: 20px;
+            color: #0b3b5c;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0b3b5c;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d0ddee;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+        .btn-submit {
+            background: #f5a623;
+            color: #0b3b5c;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 60px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-submit:hover {
+            background: #e09112;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-helmet-safety"></i><span>EdilPavia</span></a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="servizi.html">Servizi</a>
+                <a href="preventivo.html">Preventivo</a>
+                <a href="contatti.html">Contatti</a>
+                <a href="registrazione.html">Accedi</a>
+            </nav>
+            <a href="registrazione.html" class="btn-registrati"><i class="fas fa-user-plus"></i> Registrati</a>
+        </div>
+    </header>
+
+    <main class="detail-page">
+        <div class="container">
+            <div class="detail-card" id="detailCard">
+                <!-- Il contenuto viene inserito da JavaScript -->
+                <div style="text-align: center;">Caricamento...</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col"><h4>EdilPavia</h4><p><i class="fas fa-location-dot"></i> Via Roma 1, 27100 Pavia</p><p><i class="fas fa-phone"></i> 0382 123456</p><p><i class="fas fa-envelope"></i> info@edilpavia.it</p></div>
+                <div class="footer-col"><h4>Servizi</h4><p><a href="servizi.html">Edili</a></p><p><a href="servizi.html">Idraulica</a></p><p><a href="servizi.html">Elettricista</a></p><p><a href="servizi.html">Giardinaggio</a></p><p><a href="servizi.html">Antifurti</a></p></div>
+                <div class="footer-col"><h4>Provincia di Pavia</h4><p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco.</p></div>
+                <div class="footer-col"><h4>Seguici</h4><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div><p style="margin-top:20px;"><i class="fas fa-star" style="color:#f5a623;"></i> Pagamenti sicuri</p></div>
+            </div>
+            <div class="copyright">&copy; 2025 EdilPavia · Tutti i diritti riservati · <a href="#" style="color:#b0c4d9;">Privacy</a> · <a href="#" style="color:#b0c4d9;">Cookie</a></div>
+        </div>
+    </footer>
+
+    <script>
+        // Recupera l'ID dalla URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        // Servizi di default (stesso array)
+        const defaultServices = [
+            { icon: 'fas fa-hard-hat', title: 'Lavori edili', desc: 'Ristrutturazioni, murature, demolizioni.' },
+            { icon: 'fas fa-th-large', title: 'Pavimentazioni interne', desc: 'Parquet, gres, ceramica, massetti.' },
+            { icon: 'fas fa-faucet', title: 'Idraulica', desc: 'Riparazioni, installazione bagni, caldaie.' },
+            { icon: 'fas fa-bolt', title: 'Elettricista', desc: 'Impianti nuovi, messa a norma, certificazioni.' },
+            { icon: 'fas fa-paint-roller', title: 'Imbiancatura', desc: 'Tinteggiature, carte da parati, decorazioni.' },
+            { icon: 'fas fa-wind', title: 'Condizionatori', desc: 'Installazione e manutenzione climatizzatori.' },
+            { icon: 'fas fa-shield-alt', title: 'Antifurti', desc: 'Allarmi, videosorveglianza, domotica.' },
+            { icon: 'fas fa-road', title: 'Pavimentazioni esterne', desc: 'Autobloccanti, resine, vialetti.' },
+            { icon: 'fas fa-leaf', title: 'Giardinaggio', desc: 'Taglio erba, potature, progettazione.' },
+            { icon: 'fas fa-toolbox', title: 'Altri lavori', desc: 'Serramenti, tetti, coibentazioni.' }
+        ];
+
+        let services = JSON.parse(localStorage.getItem('edilpavia_services')) || defaultServices;
+
+        const detailCard = document.getElementById('detailCard');
+
+        if (id !== null && services[id]) {
+            const service = services[id];
+            detailCard.innerHTML = `
+                <div class="detail-icon"><i class="${service.icon}"></i></div>
+                <h1 class="detail-title">${service.title}</h1>
+                <p class="detail-description">${service.desc}</p>
+                <p class="detail-description">Qui puoi inserire una descrizione più approfondita del servizio, magari con dettagli sulle lavorazioni, i materiali utilizzati, i tempi medi, ecc. In futuro potrai modificare questo testo dall'admin.</p>
+                
+                <!-- Form rapido per richiedere questo specifico servizio -->
+                <div class="quick-form">
+                    <h3>Richiedi preventivo per ${service.title}</h3>
+                    <form>
+                        <div class="form-group">
+                            <label>Nome e Cognome</label>
+                            <input type="text" placeholder="Mario Rossi">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="mario@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Telefono</label>
+                            <input type="tel" placeholder="333 1234567">
+                        </div>
+                        <div class="form-group">
+                            <label>Messaggio (opzionale)</label>
+                            <textarea rows="3" placeholder="Eventuali note..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Invia richiesta</button>
+                    </form>
+                </div>
+
+                <a href="servizi.html" class="back-link"><i class="fas fa-arrow-left"></i> Torna ai servizi</a>
+            `;
+        } else {
+            detailCard.innerHTML = `
+                <h2 class="detail-title">Servizio non trovato</h2>
+                <p class="detail-description">Il servizio che cerchi non esiste.</p>
+                <a href="servizi.html" class="back-link"><i class="fas fa-arrow-left"></i> Torna ai servizi</a>
+            `;
+        }
+    </script>
+</body>
+</html>
