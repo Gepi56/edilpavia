@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdilPavia · Preventivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Roboto,sans-serif; background:#f9fafc; color:#1e2b37; line-height:1.5; }
+        a { text-decoration:none; color:inherit; }
+        .container { max-width:1280px; margin:0 auto; padding:0 24px; }
+        
+        header { background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.02); padding:16px 0; position:sticky; top:0; z-index:10; }
+        .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+        .logo { display:flex; align-items:center; gap:8px; font-size:1.8rem; font-weight:600; color:#0b3b5c; }
+        .logo i { color:#f5a623; font-size:2.2rem; }
+        .nav-links { display:flex; gap:32px; font-weight:500; color:#2c3e50; }
+        .nav-links a:hover { color:#0b3b5c; border-bottom:2px solid #f5a623; }
+        .btn-registrati { background:#0b3b5c; color:#fff!important; padding:10px 22px; border-radius:40px; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition:background 0.2s; }
+        .btn-registrati:hover { background:#124f73; }
+
+        footer { background:#102a37; color:#d0dee9; padding:48px 0 24px; border-radius:40px 40px 0 0; margin-top:60px; }
+        .footer-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px; margin-bottom:40px; }
+        .footer-col h4 { color:#fff; font-size:1.2rem; margin-bottom:20px; }
+        .footer-col p, .footer-col a { color:#b0c4d9; line-height:2; }
+        .footer-col i { width:24px; color:#f5a623; }
+        .social-icons { display:flex; gap:18px; margin-top:16px; }
+        .social-icons a { background:#1f4055; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:0.2s; }
+        .social-icons a:hover { background:#f5a623; color:#0b3b5c; }
+        .copyright { text-align:center; padding-top:32px; border-top:1px solid #2a4a5e; font-size:0.9rem; }
+
+        /* Stili form */
+        .form-page { padding:60px 0; }
+        .form-container { background:white; border-radius:40px; padding:48px; max-width:700px; margin:0 auto; box-shadow:0 20px 40px rgba(0,0,0,0.03); border:1px solid #eef2f6; }
+        .form-container h1 { font-size:2.2rem; color:#0b3b5c; margin-bottom:16px; }
+        .form-container p { color:#4a5b68; margin-bottom:32px; }
+        .form-group { margin-bottom:24px; }
+        label { font-weight:600; color:#0b3b5c; display:block; margin-bottom:8px; }
+        input, select, textarea { width:100%; padding:14px 18px; border:1px solid #d0ddee; border-radius:30px; font-size:1rem; background:#f9fafc; transition:0.2s; }
+        input:focus, select:focus, textarea:focus { outline:none; border-color:#f5a623; }
+        .btn-submit { background:#f5a623; color:#0b3b5c; border:none; padding:16px 40px; border-radius:60px; font-weight:700; font-size:1.2rem; cursor:pointer; transition:0.2s; width:100%; }
+        .btn-submit:hover { background:#e09112; }
+
+        @media (max-width:700px){ .header-inner{flex-direction:column;align-items:flex-start;} .nav-links{flex-wrap:wrap;gap:20px;} .form-container{padding:30px;} }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-helmet-safety"></i><span>EdilPavia</span></a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="servizi.html">Servizi</a>
+                <a href="preventivo.html">Preventivo</a>
+                <a href="contatti.html">Contatti</a>
+                <a href="registrazione.html">Accedi</a>
+            </nav>
+            <a href="registrazione.html" class="btn-registrati"><i class="fas fa-user-plus"></i> Registrati</a>
+        </div>
+    </header>
+
+    <main class="form-page">
+        <div class="container form-container">
+            <h1>Richiedi un preventivo gratuito</h1>
+            <p>Compila il modulo, ti ricontatteremo entro 24 ore per fissare un sopralluogo o inviarti un preventivo personalizzato.</p>
+            <form>
+                <div class="form-group">
+                    <label for="nome">Nome e Cognome</label>
+                    <input type="text" id="nome" placeholder="Mario Rossi" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="mario@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Telefono</label>
+                    <input type="tel" id="telefono" placeholder="333 1234567" required>
+                </div>
+                <div class="form-group">
+                    <label for="servizio">Tipo di servizio</label>
+                    <select id="servizio">
+                        <option>Lavori edili</option>
+                        <option>Pavimentazioni interne</option>
+                        <option>Idraulica</option>
+                        <option>Elettricista</option>
+                        <option>Imbiancatura</option>
+                        <option>Installazione condizionatori</option>
+                        <option>Impianti antifurti</option>
+                        <option>Pavimentazioni esterne</option>
+                        <option>Giardinaggio</option>
+                        <option>Altro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="messaggio">Descrivi brevemente il lavoro</label>
+                    <textarea id="messaggio" rows="4" placeholder="Es. vorrei rifare il bagno, cambio caldaia..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Invia richiesta <i class="fas fa-paper-plane"></i></button>
+            </form>
+            <p style="margin-top:24px; font-size:0.9rem; color:#7f8c8d;"><i class="fas fa-lock" style="color:#f5a623;"></i> I tuoi dati sono al sicuro, non li condividiamo con terzi.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col"><h4>EdilPavia</h4><p><i class="fas fa-location-dot"></i> Via Roma 1, 27100 Pavia</p><p><i class="fas fa-phone"></i> 0382 123456</p><p><i class="fas fa-envelope"></i> info@edilpavia.it</p></div>
+                <div class="footer-col"><h4>Servizi</h4><p><a href="servizi.html">Edili</a></p><p><a href="servizi.html">Idraulica</a></p><p><a href="servizi.html">Elettricista</a></p><p><a href="servizi.html">Giardinaggio</a></p><p><a href="servizi.html">Antifurti</a></p></div>
+                <div class="footer-col"><h4>Provincia di Pavia</h4><p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco, e l'intera provincia.</p></div>
+                <div class="footer-col"><h4>Seguici</h4><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div><p style="margin-top:20px;"><i class="fas fa-star" style="color:#f5a623;"></i> Pagamenti sicuri</p></div>
+            </div>
+            <div class="copyright">&copy; 2025 EdilPavia · Tutti i diritti riservati · <a href="#" style="color:#b0c4d9;">Privacy</a> · <a href="#" style="color:#b0c4d9;">Cookie</a></div>
+        </div>
+    </footer>
+</body>
+</html>
