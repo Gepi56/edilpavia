@@ -1,257 +1,424 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EdilPavia · Admin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Segoe UI',Roboto,sans-serif; background:#f0f4f8; }
-        .login-container, .dashboard-container { max-width:1200px; margin:0 auto; padding:40px 20px; }
-        .login-box { background:white; border-radius:40px; padding:48px; max-width:420px; margin:40px auto; box-shadow:0 20px 40px rgba(0,0,0,0.1); text-align:center; }
-        .login-box h1 { color:#0b3b5c; margin-bottom:10px; }
-        .form-group { margin-bottom:20px; text-align:left; }
-        label { font-weight:600; color:#0b3b5c; display:block; margin-bottom:8px; }
-        input { width:100%; padding:14px 18px; border:1px solid #d0ddee; border-radius:30px; font-size:1rem; }
-        .btn { background:#f5a623; color:#0b3b5c; border:none; padding:14px; border-radius:60px; font-weight:700; font-size:1.1rem; cursor:pointer; width:100%; transition:0.2s; }
-        .btn:hover { background:#e09112; }
-        .error { color:#c00; margin-top:10px; }
-
-        /* Dashboard */
-        .dashboard-container { display:none; }
-        .header-dash { display:flex; justify-content:space-between; align-items:center; background:white; padding:20px 30px; border-radius:60px; margin-bottom:30px; box-shadow:0 8px 20px rgba(0,0,0,0.02); }
-        .logo-dash { display:flex; align-items:center; gap:10px; font-size:1.8rem; font-weight:600; color:#0b3b5c; }
-        .btn-logout { background:#0b3b5c; color:white; padding:10px 22px; border-radius:40px; border:none; cursor:pointer; font-weight:600; }
-        .services-list { background:white; border-radius:40px; padding:30px; box-shadow:0 20px 40px rgba(0,0,0,0.02); }
-        .service-item-admin { display:flex; align-items:center; justify-content:space-between; padding:15px; border-bottom:1px solid #eef2f6; }
-        .service-item-admin:last-child { border-bottom:none; }
-        .service-info { display:flex; align-items:center; gap:20px; }
-        .service-info i { font-size:1.8rem; color:#f5a623; width:40px; }
-        .service-actions button { background:none; border:none; margin:0 5px; font-size:1.2rem; cursor:pointer; color:#4a5b68; transition:0.2s; }
-        .service-actions button:hover { color:#f5a623; }
-        .btn-add { background:#0b3b5c; color:white; padding:12px 25px; border-radius:60px; border:none; font-weight:600; margin-bottom:20px; cursor:pointer; }
-        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; }
-        .modal-content { background:white; border-radius:40px; padding:40px; max-width:500px; width:90%; }
-        .modal-content h3 { margin-bottom:20px; }
-        .modal-content input, .modal-content textarea { width:100%; padding:12px; margin-bottom:15px; border:1px solid #d0ddee; border-radius:30px; }
-        .modal-actions { display:flex; gap:10px; justify-content:flex-end; }
-        .btn-save, .btn-cancel { padding:10px 25px; border-radius:60px; border:none; font-weight:600; cursor:pointer; }
-        .btn-save { background:#f5a623; color:#0b3b5c; }
-        .btn-cancel { background:#ddd; color:#333; }
-        .icon-preview { font-size:2rem; margin-bottom:15px; color:#f5a623; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EdilPavia · Pannello Admin</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background: #f4f7fc;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+    .admin-header {
+      background: #0b3b5c;
+      color: white;
+      padding: 20px 0;
+      margin-bottom: 30px;
+    }
+    .admin-header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .admin-header i {
+      color: #f5a623;
+      margin-right: 10px;
+    }
+    .table-container {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .btn-add {
+      background: #0b3b5c;
+      color: white;
+      border-radius: 40px;
+      padding: 10px 25px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      border: none;
+    }
+    .btn-add:hover {
+      background: #124f73;
+    }
+    .btn-edit {
+      background: #f5a623;
+      color: #0b3b5c;
+      border: none;
+      border-radius: 30px;
+      padding: 5px 15px;
+      font-weight: 600;
+      margin-right: 5px;
+    }
+    .btn-delete {
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 5px 15px;
+      font-weight: 600;
+    }
+    .modal-header {
+      background: #0b3b5c;
+      color: white;
+    }
+    .modal-header .btn-close {
+      filter: brightness(0) invert(1);
+    }
+    .preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .preview-item {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+    }
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .preview-item .remove-img {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: rgba(220, 53, 69, 0.8);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-container" id="loginContainer">
-        <div class="login-box">
-            <i class="fas fa-lock" style="font-size:3rem; color:#f5a623;"></i>
-            <h1>Area Admin</h1>
-            <p>Inserisci le credenziali per gestire il sito</p>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="password" placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn">Accedi</button>
-                <div class="error" id="loginError"></div>
-            </form>
-        </div>
+
+  <div class="admin-header">
+    <div class="container">
+      <h1><i class="fas fa-cogs"></i> Pannello di Amministrazione</h1>
+      <p class="mb-0">Gestione servizi · EdilPavia</p>
     </div>
+  </div>
 
-    <div class="dashboard-container" id="dashboardContainer">
-        <div class="dashboard-container-inner">
-            <div class="header-dash">
-                <div class="logo-dash">
-                    <i class="fas fa-helmet-safety"></i>
-                    <span>EdilPavia Admin</span>
-                </div>
-                <button class="btn-logout" id="logoutBtn">Esci</button>
-            </div>
+  <div class="container">
+    <div class="table-container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3><i class="fas fa-list me-2"></i>Elenco servizi</h3>
+        <button class="btn-add" data-bs-toggle="modal" data-bs-target="#addModal">
+          <i class="fas fa-plus me-2"></i>Nuovo servizio
+        </button>
+      </div>
 
-            <div class="services-list">
-                <h2 style="margin-bottom:20px;">Gestione Servizi</h2>
-                <button class="btn-add" id="addServiceBtn"><i class="fas fa-plus"></i> Aggiungi servizio</button>
-                <div id="servicesContainer"></div>
-            </div>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Icona</th>
+              <th>Titolo</th>
+              <th>Descrizione breve</th>
+              <th>Azioni</th>
+            </tr>
+          </thead>
+          <tbody id="serviziTableBody">
+            <!-- Popolato via JS -->
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 
-    <!-- Modal per aggiungere/modificare servizio -->
-    <div class="modal" id="serviceModal">
-        <div class="modal-content">
-            <h3 id="modalTitle">Aggiungi servizio</h3>
-            <div class="icon-preview" id="iconPreview"><i class="fas fa-tools"></i></div>
-            <input type="text" id="serviceIcon" placeholder="Icona (es. fas fa-hard-hat)" value="fas fa-tools">
-            <input type="text" id="serviceTitle" placeholder="Titolo servizio">
-            <textarea id="serviceDesc" placeholder="Descrizione breve" rows="3"></textarea>
-            <div class="modal-actions">
-                <button class="btn-save" id="saveServiceBtn">Salva</button>
-                <button class="btn-cancel" id="cancelModalBtn">Annulla</button>
-            </div>
+  <!-- MODALE AGGIUNTA -->
+  <div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Nuovo servizio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
+        <div class="modal-body">
+          <form id="addForm">
+            <div class="mb-3">
+              <label class="form-label">Icona (classe FontAwesome, es. "fas fa-hard-hat")</label>
+              <input type="text" class="form-control" id="addIcona" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Titolo</label>
+              <input type="text" class="form-control" id="addTitolo" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Descrizione breve</label>
+              <textarea class="form-control" id="addDescBreve" rows="2" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Descrizione estesa</label>
+              <textarea class="form-control" id="addDescEstesa" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Immagini (URL, uno per riga)</label>
+              <textarea class="form-control" id="addImmagini" rows="3" placeholder="https://..."></textarea>
+              <div class="preview-container" id="addPreview"></div>
+              <button type="button" class="btn btn-sm btn-secondary mt-2" id="addAggiungiUrl">Aggiungi riga</button>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Prezzo indicativo (es. "da € 500")</label>
+              <input type="text" class="form-control" id="addPrezzo">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+          <button type="button" class="btn btn-primary" id="salvaNuovo">Salva servizio</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        // Password fissa (cambiala dopo)
-        const ADMIN_PASSWORD = 'edil2025';
+  <!-- MODALE MODIFICA -->
+  <div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Modifica servizio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm">
+            <input type="hidden" id="editId">
+            <div class="mb-3">
+              <label class="form-label">Icona (classe FontAwesome)</label>
+              <input type="text" class="form-control" id="editIcona" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Titolo</label>
+              <input type="text" class="form-control" id="editTitolo" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Descrizione breve</label>
+              <textarea class="form-control" id="editDescBreve" rows="2" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Descrizione estesa</label>
+              <textarea class="form-control" id="editDescEstesa" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Immagini (URL, uno per riga)</label>
+              <textarea class="form-control" id="editImmagini" rows="3" placeholder="https://..."></textarea>
+              <div class="preview-container" id="editPreview"></div>
+              <button type="button" class="btn btn-sm btn-secondary mt-2" id="editAggiungiUrl">Aggiungi riga</button>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Prezzo indicativo</label>
+              <input type="text" class="form-control" id="editPrezzo">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+          <button type="button" class="btn btn-primary" id="salvaModifiche">Aggiorna servizio</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // Servizi iniziali (se localStorage è vuoto)
-        const defaultServices = [
-            { icon: 'fas fa-hard-hat', title: 'Lavori edili', desc: 'Ristrutturazioni, murature, demolizioni.' },
-            { icon: 'fas fa-th-large', title: 'Pavimentazioni interne', desc: 'Parquet, gres, ceramica, massetti.' },
-            { icon: 'fas fa-faucet', title: 'Idraulica', desc: 'Riparazioni, installazione bagni, caldaie.' },
-            { icon: 'fas fa-bolt', title: 'Elettricista', desc: 'Impianti nuovi, messa a norma, certificazioni.' },
-            { icon: 'fas fa-paint-roller', title: 'Imbiancatura', desc: 'Tinteggiature, carte da parati, decorazioni.' },
-            { icon: 'fas fa-wind', title: 'Condizionatori', desc: 'Installazione e manutenzione climatizzatori.' },
-            { icon: 'fas fa-shield-alt', title: 'Antifurti', desc: 'Allarmi, videosorveglianza, domotica.' },
-            { icon: 'fas fa-road', title: 'Pavimentazioni esterne', desc: 'Autobloccanti, resine, vialetti.' },
-            { icon: 'fas fa-leaf', title: 'Giardinaggio', desc: 'Taglio erba, potature, progettazione.' },
-            { icon: 'fas fa-toolbox', title: 'Altri lavori', desc: 'Serramenti, tetti, coibentazioni.' }
-        ];
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/servizi-data.js"></script>
+  <script>
+    (function() {
+      // Riferimenti ai modali
+      const addModalEl = document.getElementById('addModal');
+      const editModalEl = document.getElementById('editModal');
+      let addModal, editModal;
 
-        // Carica servizi da localStorage o usa default
-        let services = JSON.parse(localStorage.getItem('edilpavia_services')) || defaultServices;
+      // Inizializza modali Bootstrap
+      if (addModalEl) addModal = new bootstrap.Modal(addModalEl);
+      if (editModalEl) editModal = new bootstrap.Modal(editModalEl);
 
-        // Variabili per la modifica
-        let editingIndex = -1;
+      // Elementi DOM
+      const tbody = document.getElementById('serviziTableBody');
+      const addForm = document.getElementById('addForm');
+      const editForm = document.getElementById('editForm');
 
-        // Elementi DOM
-        const loginContainer = document.getElementById('loginContainer');
-        const dashboardContainer = document.getElementById('dashboardContainer');
-        const loginForm = document.getElementById('loginForm');
-        const loginError = document.getElementById('loginError');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const servicesContainer = document.getElementById('servicesContainer');
-        const addServiceBtn = document.getElementById('addServiceBtn');
-        const serviceModal = document.getElementById('serviceModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const serviceIcon = document.getElementById('serviceIcon');
-        const serviceTitle = document.getElementById('serviceTitle');
-        const serviceDesc = document.getElementById('serviceDesc');
-        const saveServiceBtn = document.getElementById('saveServiceBtn');
-        const cancelModalBtn = document.getElementById('cancelModalBtn');
-        const iconPreview = document.getElementById('iconPreview');
+      // Funzione per aggiornare la tabella
+      function caricaServizi() {
+        const servizi = getServizi();
+        tbody.innerHTML = '';
+        servizi.forEach(s => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><i class="${s.icona || s.icon}"></i></td>
+            <td>${s.titolo || s.title}</td>
+            <td>${s.descrizioneBreve || s.desc}</td>
+            <td>
+              <button class="btn-edit btn-sm" onclick="modificaServizio('${s.id}')"><i class="fas fa-pen"></i> Modifica</button>
+              <button class="btn-delete btn-sm" onclick="eliminaServizio('${s.id}')"><i class="fas fa-trash"></i> Elimina</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
 
-        // Funzione per salvare servizi in localStorage
-        function saveServices() {
-            localStorage.setItem('edilpavia_services', JSON.stringify(services));
-        }
+      // Funzione per mostrare anteprime immagini da textarea
+      function aggiornaPreview(textareaId, previewId) {
+        const textarea = document.getElementById(textareaId);
+        const preview = document.getElementById(previewId);
+        if (!textarea || !preview) return;
+        const urls = textarea.value.split('\n').map(u => u.trim()).filter(u => u !== '');
+        preview.innerHTML = urls.map((url, index) => `
+          <div class="preview-item">
+            <img src="${url}" onerror="this.parentElement.style.display='none'">
+            <button class="remove-img" type="button" onclick="rimuoviUrl('${textareaId}', '${previewId}', ${index})">&times;</button>
+          </div>
+        `).join('');
+      }
 
-        // Funzione per renderizzare la lista servizi
-        function renderServices() {
-            servicesContainer.innerHTML = '';
-            services.forEach((service, index) => {
-                const div = document.createElement('div');
-                div.className = 'service-item-admin';
-                div.innerHTML = `
-                    <div class="service-info">
-                        <i class="${service.icon}"></i>
-                        <div>
-                            <strong>${service.title}</strong>
-                            <p style="color:#4a5b68; font-size:0.9rem;">${service.desc}</p>
-                        </div>
-                    </div>
-                    <div class="service-actions">
-                        <button onclick="editService(${index})"><i class="fas fa-edit"></i></button>
-                        <button onclick="deleteService(${index})"><i class="fas fa-trash"></i></button>
-                    </div>
-                `;
-                servicesContainer.appendChild(div);
+      // Rimuovere un URL dal textarea e aggiornare preview
+      window.rimuoviUrl = function(textareaId, previewId, index) {
+        const textarea = document.getElementById(textareaId);
+        let urls = textarea.value.split('\n').map(u => u.trim()).filter(u => u !== '');
+        urls.splice(index, 1);
+        textarea.value = urls.join('\n');
+        aggiornaPreview(textareaId, previewId);
+      };
+
+      // Inizializza ascoltatori per i textarea delle immagini
+      function initTextareaListeners() {
+        ['addImmagini', 'editImmagini'].forEach(id => {
+          const ta = document.getElementById(id);
+          if (ta) {
+            ta.addEventListener('input', function() {
+              const previewId = id === 'addImmagini' ? 'addPreview' : 'editPreview';
+              aggiornaPreview(id, previewId);
             });
+          }
+        });
+
+        // Pulsanti "Aggiungi riga"
+        document.getElementById('addAggiungiUrl')?.addEventListener('click', function() {
+          const ta = document.getElementById('addImmagini');
+          ta.value += '\n';
+          ta.focus();
+          aggiornaPreview('addImmagini', 'addPreview');
+        });
+        document.getElementById('editAggiungiUrl')?.addEventListener('click', function() {
+          const ta = document.getElementById('editImmagini');
+          ta.value += '\n';
+          ta.focus();
+          aggiornaPreview('editImmagini', 'editPreview');
+        });
+      }
+
+      // Apri modale di modifica con i dati del servizio
+      window.modificaServizio = function(id) {
+        const servizi = getServizi();
+        const s = servizi.find(s => s.id === id);
+        if (!s) return;
+
+        document.getElementById('editId').value = s.id;
+        document.getElementById('editIcona').value = s.icona || s.icon || '';
+        document.getElementById('editTitolo').value = s.titolo || s.title || '';
+        document.getElementById('editDescBreve').value = s.descrizioneBreve || s.desc || '';
+        document.getElementById('editDescEstesa').value = s.descrizioneEstesa || '';
+        // Immagini: array -> testo (uno per riga)
+        const immagini = s.immagini || [];
+        document.getElementById('editImmagini').value = immagini.join('\n');
+        document.getElementById('editPrezzo').value = s.prezzo || '';
+
+        // Aggiorna anteprime
+        aggiornaPreview('editImmagini', 'editPreview');
+
+        editModal.show();
+      };
+
+      // Salva modifiche
+      document.getElementById('salvaModifiche').addEventListener('click', function() {
+        const id = document.getElementById('editId').value;
+        const icona = document.getElementById('editIcona').value;
+        const titolo = document.getElementById('editTitolo').value;
+        const descBreve = document.getElementById('editDescBreve').value;
+        const descEstesa = document.getElementById('editDescEstesa').value;
+        const immaginiText = document.getElementById('editImmagini').value;
+        const immagini = immaginiText.split('\n').map(u => u.trim()).filter(u => u !== '');
+        const prezzo = document.getElementById('editPrezzo').value;
+
+        const servizioAggiornato = {
+          id: id,
+          icona: icona,
+          titolo: titolo,
+          descrizioneBreve: descBreve,
+          descrizioneEstesa: descEstesa,
+          immagini: immagini,
+          prezzo: prezzo
+        };
+
+        if (aggiornaServizio(servizioAggiornato)) {
+          editModal.hide();
+          caricaServizi();
+        } else {
+          alert('Errore durante il salvataggio');
         }
+      });
 
-        // Funzioni globali per i pulsanti
-        window.editService = function(index) {
-            editingIndex = index;
-            const s = services[index];
-            serviceIcon.value = s.icon;
-            serviceTitle.value = s.title;
-            serviceDesc.value = s.desc;
-            iconPreview.innerHTML = `<i class="${s.icon}"></i>`;
-            modalTitle.innerText = 'Modifica servizio';
-            serviceModal.style.display = 'flex';
+      // Salva nuovo servizio
+      document.getElementById('salvaNuovo').addEventListener('click', function() {
+        const icona = document.getElementById('addIcona').value;
+        const titolo = document.getElementById('addTitolo').value;
+        const descBreve = document.getElementById('addDescBreve').value;
+        const descEstesa = document.getElementById('addDescEstesa').value;
+        const immaginiText = document.getElementById('addImmagini').value;
+        const immagini = immaginiText.split('\n').map(u => u.trim()).filter(u => u !== '');
+        const prezzo = document.getElementById('addPrezzo').value;
+
+        const nuovoServizio = {
+          icona: icona,
+          titolo: titolo,
+          descrizioneBreve: descBreve,
+          descrizioneEstesa: descEstesa,
+          immagini: immagini,
+          prezzo: prezzo
         };
 
-        window.deleteService = function(index) {
-            if (confirm('Eliminare questo servizio?')) {
-                services.splice(index, 1);
-                saveServices();
-                renderServices();
-            }
-        };
+        aggiungiServizio(nuovoServizio);
+        addModal.hide();
+        addForm.reset();
+        document.getElementById('addPreview').innerHTML = ''; // pulisci anteprime
+        caricaServizi();
+      });
 
-        // Login
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const pwd = document.getElementById('password').value;
-            if (pwd === ADMIN_PASSWORD) {
-                loginContainer.style.display = 'none';
-                dashboardContainer.style.display = 'block';
-                renderServices();
-            } else {
-                loginError.innerText = 'Password errata';
-            }
+      // Elimina servizio
+      window.eliminaServizio = function(id) {
+        if (confirm('Sei sicuro di voler eliminare questo servizio?')) {
+          if (eliminaServizio(id)) {
+            caricaServizi();
+          }
+        }
+      };
+
+      // All'avvio
+      document.addEventListener('DOMContentLoaded', function() {
+        caricaServizi();
+        initTextareaListeners();
+
+        // Pulisci form aggiunta quando si chiude il modal
+        addModalEl.addEventListener('hidden.bs.modal', function() {
+          addForm.reset();
+          document.getElementById('addPreview').innerHTML = '';
         });
-
-        // Logout
-        logoutBtn.addEventListener('click', () => {
-            dashboardContainer.style.display = 'none';
-            loginContainer.style.display = 'block';
-            document.getElementById('password').value = '';
-            loginError.innerText = '';
-        });
-
-        // Aggiungi servizio
-        addServiceBtn.addEventListener('click', () => {
-            editingIndex = -1;
-            serviceIcon.value = 'fas fa-tools';
-            serviceTitle.value = '';
-            serviceDesc.value = '';
-            iconPreview.innerHTML = '<i class="fas fa-tools"></i>';
-            modalTitle.innerText = 'Aggiungi servizio';
-            serviceModal.style.display = 'flex';
-        });
-
-        // Anteprima icona
-        serviceIcon.addEventListener('input', () => {
-            iconPreview.innerHTML = `<i class="${serviceIcon.value}"></i>`;
-        });
-
-        // Salva (nuovo o modifica)
-        saveServiceBtn.addEventListener('click', () => {
-            const icon = serviceIcon.value.trim();
-            const title = serviceTitle.value.trim();
-            const desc = serviceDesc.value.trim();
-            if (!icon || !title || !desc) {
-                alert('Compila tutti i campi');
-                return;
-            }
-            if (editingIndex === -1) {
-                // Aggiungi
-                services.push({ icon, title, desc });
-            } else {
-                // Modifica
-                services[editingIndex] = { icon, title, desc };
-            }
-            saveServices();
-            renderServices();
-            serviceModal.style.display = 'none';
-        });
-
-        // Annulla modale
-        cancelModalBtn.addEventListener('click', () => {
-            serviceModal.style.display = 'none';
-        });
-
-        // Chiudi modale cliccando fuori
-        window.addEventListener('click', (e) => {
-            if (e.target === serviceModal) {
-                serviceModal.style.display = 'none';
-            }
-        });
-
-        // Se già loggato? No, parte dal login.
-    </script>
+      });
+    })();
+  </script>
 </body>
 </html>
