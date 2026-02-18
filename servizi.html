@@ -127,16 +127,7 @@
         </div>
 
         <div class="container services-detail-grid">
-            <div class="service-item"><i class="fas fa-hard-hat"></i><h3>Lavori edili</h3><p>Ristrutturazioni complete, murature, demolizioni.</p></div>
-            <div class="service-item"><i class="fas fa-th-large"></i><h3>Pavimentazioni interne</h3><p>Parquet, gres, ceramica, marmo, massetti.</p></div>
-            <div class="service-item"><i class="fas fa-faucet"></i><h3>Idraulica</h3><p>Riparazioni, installazione bagni, caldaie.</p></div>
-            <div class="service-item"><i class="fas fa-bolt"></i><h3>Elettricista</h3><p>Impianti nuovi, messa a norma, certificazioni.</p></div>
-            <div class="service-item"><i class="fas fa-paint-roller"></i><h3>Imbiancatura</h3><p>Tinteggiature, carte da parati, decorazioni.</p></div>
-            <div class="service-item"><i class="fas fa-wind"></i><h3>Condizionatori</h3><p>Installazione e manutenzione climatizzatori.</p></div>
-            <div class="service-item"><i class="fas fa-shield-alt"></i><h3>Antifurti</h3><p>Allarmi, videosorveglianza, domotica.</p></div>
-            <div class="service-item"><i class="fas fa-road"></i><h3>Pavimentazioni esterne</h3><p>Autobloccanti, resine, vialetti.</p></div>
-            <div class="service-item"><i class="fas fa-leaf"></i><h3>Giardinaggio</h3><p>Taglio erba, potature, progettazione.</p></div>
-            <div class="service-item"><i class="fas fa-toolbox"></i><h3>Altri lavori</h3><p>Serramenti, tetti, coibentazioni.</p></div>
+        
         </div>
     </main>
 
@@ -151,5 +142,40 @@
             <div class="copyright">&copy; 2025 EdilPavia · Tutti i diritti riservati · <a href="#" style="color:#b0c4d9;">Privacy</a> · <a href="#" style="color:#b0c4d9;">Cookie</a></div>
         </div>
     </footer>
+	
+	<script>
+    // Servizi di default (se localStorage è vuoto)
+    const defaultServices = [
+        { icon: 'fas fa-hard-hat', title: 'Lavori edili', desc: 'Ristrutturazioni, murature, demolizioni.' },
+        { icon: 'fas fa-th-large', title: 'Pavimentazioni interne', desc: 'Parquet, gres, ceramica, massetti.' },
+        { icon: 'fas fa-faucet', title: 'Idraulica', desc: 'Riparazioni, installazione bagni, caldaie.' },
+        { icon: 'fas fa-bolt', title: 'Elettricista', desc: 'Impianti nuovi, messa a norma, certificazioni.' },
+        { icon: 'fas fa-paint-roller', title: 'Imbiancatura', desc: 'Tinteggiature, carte da parati, decorazioni.' },
+        { icon: 'fas fa-wind', title: 'Condizionatori', desc: 'Installazione e manutenzione climatizzatori.' },
+        { icon: 'fas fa-shield-alt', title: 'Antifurti', desc: 'Allarmi, videosorveglianza, domotica.' },
+        { icon: 'fas fa-road', title: 'Pavimentazioni esterne', desc: 'Autobloccanti, resine, vialetti.' },
+        { icon: 'fas fa-leaf', title: 'Giardinaggio', desc: 'Taglio erba, potature, progettazione.' },
+        { icon: 'fas fa-toolbox', title: 'Altri lavori', desc: 'Serramenti, tetti, coibentazioni.' }
+    ];
+
+    // Carica servizi da localStorage o usa default
+    let services = JSON.parse(localStorage.getItem('edilpavia_services')) || defaultServices;
+
+    // Seleziona il contenitore della griglia
+    const grid = document.querySelector('.services-detail-grid');
+    if (grid) {
+        grid.innerHTML = ''; // svuota
+        services.forEach(service => {
+            const div = document.createElement('div');
+            div.className = 'service-item';
+            div.innerHTML = `
+                <i class="${service.icon}"></i>
+                <h3>${service.title}</h3>
+                <p>${service.desc}</p>
+            `;
+            grid.appendChild(div);
+        });
+    }
+</script>
 </body>
 </html>
