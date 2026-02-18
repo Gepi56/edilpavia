@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdilPavia · Servizi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Stessi stili di index.html, li copiamo per coerenza */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #f9fafc; color: #1e2b37; line-height: 1.5; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        /* Header identico */
+        header { background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.02); padding: 16px 0; position: sticky; top: 0; z-index: 10; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+        .logo { display: flex; align-items: center; gap: 8px; font-size: 1.8rem; font-weight: 600; color: #0b3b5c; }
+        .logo i { color: #f5a623; font-size: 2.2rem; }
+        .nav-links { display: flex; gap: 32px; font-weight: 500; color: #2c3e50; }
+        .nav-links a:hover { color: #0b3b5c; border-bottom: 2px solid #f5a623; }
+        .btn-registrati { background-color: #0b3b5c; color: white !important; padding: 10px 22px; border-radius: 40px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; }
+        .btn-registrati:hover { background-color: #124f73; }
+        /* Footer identico */
+        footer { background-color: #102a37; color: #d0dee9; padding: 48px 0 24px; border-radius: 40px 40px 0 0; margin-top: 60px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: white; font-size: 1.2rem; margin-bottom: 20px; }
+        .footer-col p, .footer-col a { color: #b0c4d9; line-height: 2; }
+        .footer-col i { width: 24px; color: #f5a623; }
+        .social-icons { display: flex; gap: 18px; margin-top: 16px; }
+        .social-icons a { background-color: #1f4055; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .social-icons a:hover { background-color: #f5a623; color: #0b3b5c; }
+        .copyright { text-align: center; padding-top: 32px; border-top: 1px solid #2a4a5e; font-size: 0.9rem; }
+        /* Stili specifici per la pagina servizi */
+        .page-header { text-align: center; padding: 60px 0 20px; }
+        .page-header h1 { font-size: 2.5rem; color: #0b3b5c; }
+        .services-detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 30px; margin: 40px 0; }
+        .service-item { background: white; border-radius: 24px; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.02); border: 1px solid #f0f3f7; }
+        .service-item i { font-size: 2.8rem; color: #f5a623; margin-bottom: 16px; }
+        .service-item h3 { font-size: 1.5rem; margin-bottom: 10px; color: #0b3b5c; }
+        .service-item p { color: #4a5b68; }
+        @media (max-width:700px){ .header-inner{flex-direction:column;align-items:flex-start;} .nav-links{flex-wrap:wrap;gap:20px;} }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-helmet-safety"></i><span>EdilPavia</span></a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="servizi.html">Servizi</a>
+                <a href="preventivo.html">Preventivo</a>
+                <a href="contatti.html">Contatti</a>
+                <a href="registrazione.html">Accedi</a>
+            </nav>
+            <a href="registrazione.html" class="btn-registrati"><i class="fas fa-user-plus"></i> Registrati</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container page-header">
+            <h1>Tutti i nostri servizi</h1>
+            <p style="font-size:1.2rem; color:#4a5b68;">Professionisti per ogni esigenza, in tutta la provincia di Pavia</p>
+        </div>
+
+        <div class="container services-detail-grid">
+            <!-- Ripetiamo i servizi con più dettaglio (per ora solo titolo, poi implementeremo) -->
+            <div class="service-item"><i class="fas fa-hard-hat"></i><h3>Lavori edili</h3><p>Ristrutturazioni complete, murature, demolizioni, tramezzi e piccole manutenzioni.</p></div>
+            <div class="service-item"><i class="fas fa-th-large"></i><h3>Pavimentazioni interne</h3><p>Parquet, gres, ceramica, marmo, massetti e sottofondi.</p></div>
+            <div class="service-item"><i class="fas fa-faucet"></i><h3>Idraulica</h3><p>Riparazioni, installazione bagni, caldaie, sanitarie e antigelo.</p></div>
+            <div class="service-item"><i class="fas fa-bolt"></i><h3>Elettricista</h3><p>Impianti nuovi, messa a norma, quadri elettrici, certificazioni.</p></div>
+            <div class="service-item"><i class="fas fa-paint-roller"></i><h3>Imbiancatura</h3><p>Tinteggiature interne/esterne, carte da parati, decorazioni.</p></div>
+            <div class="service-item"><i class="fas fa-wind"></i><h3>Condizionatori</h3><p>Installazione, manutenzione, riparazione di climatizzatori e pompe di calore.</p></div>
+            <div class="service-item"><i class="fas fa-shield-alt"></i><h3>Antifurti</h3><p>Impianti di allarme, videosorveglianza, domotica per la sicurezza.</p></div>
+            <div class="service-item"><i class="fas fa-road"></i><h3>Pavimentazioni esterne</h3><p>Autobloccanti, resine, ghiaietto, vialetti e aree verdi.</p></div>
+            <div class="service-item"><i class="fas fa-leaf"></i><h3>Giardinaggio</h3><p>Taglio erba, potature, progettazione giardini, manutenzione del verde.</p></div>
+            <div class="service-item"><i class="fas fa-toolbox"></i><h3>Altri lavori</h3><p>Serramenti, tetti, coibentazioni, traslochi, piccole riparazioni.</p></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col"><h4>EdilPavia</h4><p><i class="fas fa-location-dot"></i> Via Roma 1, 27100 Pavia</p><p><i class="fas fa-phone"></i> 0382 123456</p><p><i class="fas fa-envelope"></i> info@edilpavia.it</p></div>
+                <div class="footer-col"><h4>Servizi</h4><p><a href="servizi.html">Edili</a></p><p><a href="servizi.html">Idraulica</a></p><p><a href="servizi.html">Elettricista</a></p><p><a href="servizi.html">Giardinaggio</a></p><p><a href="servizi.html">Antifurti</a></p></div>
+                <div class="footer-col"><h4>Provincia di Pavia</h4><p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco, e l'intera provincia.</p></div>
+                <div class="footer-col"><h4>Seguici</h4><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div><p style="margin-top:20px;"><i class="fas fa-star" style="color:#f5a623;"></i> Pagamenti sicuri</p></div>
+            </div>
+            <div class="copyright">&copy; 2025 EdilPavia · Tutti i diritti riservati · <a href="#" style="color:#b0c4d9;">Privacy</a> · <a href="#" style="color:#b0c4d9;">Cookie</a></div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdilPavia · Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Stili identici a prima, li riporto per intero */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background-color: #f9fafc;
+            color: #1e2b37;
+            line-height: 1.5;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0b3b5c;
+        }
+
+        .logo i {
+            color: #f5a623;
+            font-size: 2.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .nav-links a:hover {
+            color: #0b3b5c;
+            border-bottom: 2px solid #f5a623;
+        }
+
+        .btn-registrati {
+            background-color: #0b3b5c;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-registrati:hover {
+            background-color: #124f73;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #e1eff7 0%, #ffffff 80%);
+            border-radius: 0 0 40px 40px;
+            padding: 60px 0;
+            margin-bottom: 20px;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #0b3b5c;
+            max-width: 900px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero .highlight {
+            color: #f5a623;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #f5a623;
+            color: #0b3b5c;
+            box-shadow: 0 8px 18px rgba(245, 166, 35, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: #e09112;
+            transform: scale(1.02);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid #0b3b5c;
+            color: #0b3b5c;
+        }
+
+        .btn-outline:hover {
+            background-color: #0b3b5c;
+            color: white;
+        }
+
+        /* Sezione servizi */
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #0b3b5c;
+            margin: 60px 0 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #4a5b68;
+            font-size: 1.1rem;
+            margin-bottom: 48px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 28px;
+            padding: 32px 16px;
+            text-align: center;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 32px rgba(11, 59, 92, 0.08);
+        }
+
+        .service-card i {
+            font-size: 3.2rem;
+            color: #f5a623;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0b3b5c;
+        }
+
+        .service-card p {
+            color: #4a5b68;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        .service-link {
+            color: #0b3b5c;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .service-link i {
+            font-size: 0.9rem;
+            color: #f5a623;
+            margin: 0;
+        }
+
+        /* Sezione registrazione sconti */
+        .offerta-section {
+            background-color: #0b3b5c;
+            border-radius: 48px;
+            padding: 56px 40px;
+            margin: 60px 0;
+            color: white;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .offerta-text {
+            flex: 2 1 300px;
+        }
+
+        .offerta-text h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .offerta-text h2 i {
+            color: #f5a623;
+            margin-right: 10px;
+        }
+
+        .offerta-text p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .offerta-cta {
+            flex: 1 1 auto;
+            text-align: center;
+        }
+
+        .btn-registrati-oggi {
+            background-color: #f5a623;
+            color: #0b3b5c;
+            padding: 18px 40px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-registrati-oggi:hover {
+            background-color: #e6a023;
+            transform: scale(1.02);
+        }
+
+        .small-note {
+            margin-top: 12px;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #102a37;
+            color: #d0dee9;
+            padding: 48px 0 24px;
+            border-radius: 40px 40px 0 0;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-col p, .footer-col a {
+            color: #b0c4d9;
+            line-height: 2;
+        }
+
+        .footer-col i {
+            width: 24px;
+            color: #f5a623;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 18px;
+            margin-top: 16px;
+        }
+
+        .social-icons a {
+            background-color: #1f4055;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .social-icons a:hover {
+            background-color: #f5a623;
+            color: #0b3b5c;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid #2a4a5e;
+            font-size: 0.9rem;
+        }
+
+        .provincia-badge {
+            background-color: #f5a62320;
+            color: #0b3b5c;
+            border-radius: 60px;
+            padding: 6px 18px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 700px) {
+            .header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .offerta-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 24px;
+            }
+            .btn-registrati-oggi {
+                font-size: 1.1rem;
+                padding: 14px 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <i class="fas fa-helmet-safety"></i>
+                <span>EdilPavia</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="servizi.html">Servizi</a>
+                <a href="preventivo.html">Preventivo</a>
+                <a href="contatti.html">Contatti</a>
+                <a href="registrazione.html">Accedi</a>
+            </nav>
+            <a href="registrazione.html" class="btn-registrati"><i class="fas fa-user-plus"></i> Registrati</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-content">
+                <span class="provincia-badge"><i class="fas fa-map-pin"></i> Provincia di Pavia</span>
+                <h1>Preventivi e sopralluoghi <span class="highlight">gratuiti</span> per la tua casa</h1>
+                <p>Edilizia, idraulica, elettricità, giardinaggio e tanto altro. Professionisti affidabili a due passi da te.</p>
+                <div class="hero-buttons">
+                    <a href="preventivo.html" class="btn btn-primary"><i class="fas fa-calculator"></i> Richiedi preventivo</a>
+                    <a href="preventivo.html" class="btn btn-outline"><i class="fas fa-calendar-check"></i> Richiedi sopralluogo</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <h2 class="section-title">I nostri servizi</h2>
+            <p class="section-subtitle">Scegli il mestiere che fa per te, siamo in tutta la provincia</p>
+            <div class="services-grid">
+                <!-- Lavori edili -->
+                <div class="service-card">
+                    <i class="fas fa-hard-hat"></i>
+                    <h3>Lavori edili</h3>
+                    <p>Ristrutturazioni, murature, demolizioni e piccole manutenzioni.</p>
+                    <a href="servizi.html" class="service-link">Scopri <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Pavimentazioni interne -->
+                <div class="service-card">
+                    <i class="fas fa-th-large"></i>
+                    <h3>Pavimentazioni interne</h3>
+                    <p>Parquet, gres, ceramica e massetti a regola d'arte.</p>
+                    <a href="servizi.html" class="service-link">Scopri <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Idraulica -->
+                <div class="service-card">
+                    <i class="fas fa-faucet"></i>
+                    <h3>Idraulica</h3>
+                    <p>Riparazioni, installazioni, caldaie e sanitarie.</p>
+                    <a href="servizi.html" class="service-link">Scopri <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Elettricista -->
+                <div class="service-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Elettricista</h3>
+                    <p>Impianti nuovi, messa a norma, certificazioni.</p>
+                    <a href="servizi.html" class="service-link">Scopri <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Imbiancatura -->
+                <div class="service-card">
+                    <i class="fas fa-paint-roller"></i>
+                    <h3>Imbiancatura</h3>
+                    <p>Tinteggiature interne/esterne, carte da parati.</p>
+                    <a href="servizi.html" class="service-link">Scopri <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Installazione condizionatori -->
+                <div class="service-card">
+                    <i class="fas fa-wind"></i>
+                    <h3>Installazione condizionatori</h3>
+                    <p>Climatizzatori, pompe di calore, manutenzione.</p>
+                    <a href="servizi.html" class="service-link">Scopri <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Impianti antifurti -->
+                <div class="service-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Impianti antifurti</h3>
+                    <p>Videosorveglianza, allarmi e domotica.</p>
+                    <a href="servizi.html" class="service-link">Scopri <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Pavimentazioni esterne -->
+                <div class="service-card">
+                    <i class="fas fa-road"></i>
+                    <h3>Pavimentazioni esterne</h3>
+                    <p>Autobloccanti, ghiaietto, resine e vialetti.</p>
+                    <a href="servizi.html" class="service-link">Scopri <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Giardinaggio -->
+                <div class="service-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Giardinaggio</h3>
+                    <p>Taglio erba, potature, progettazione del verde.</p>
+                    <a href="servizi.html" class="service-link">Scopri <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Altri lavori -->
+                <div class="service-card">
+                    <i class="fas fa-toolbox"></i>
+                    <h3>Altri lavori</h3>
+                    <p>Serramenti, tetti, coibentazioni, traslochi…</p>
+                    <a href="servizi.html" class="service-link">Tutti <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="offerta-section">
+                <div class="offerta-text">
+                    <h2><i class="fas fa-gift"></i> Registrati e ottieni sconti</h2>
+                    <p>Iscriviti gratis al sito: avrai subito un 10% di sconto sul primo intervento e accesso a promozioni esclusive in provincia di Pavia.</p>
+                </div>
+                <div class="offerta-cta">
+                    <a href="registrazione.html" class="btn-registrati-oggi"><i class="fas fa-user-check"></i> Crea account</a>
+                    <div class="small-note">Già registrato? <a href="registrazione.html" style="color:#f5a623; text-decoration:underline;">Accedi</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="text-align:center; margin: 30px 0 20px;">
+            <p style="font-size:1.2rem;"><i class="fas fa-check-circle" style="color:#f5a623;"></i> 100% professionisti del territorio · Assistenza rapida · Preventivi chiari</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>EdilPavia</h4>
+                    <p><i class="fas fa-location-dot"></i> Via Roma 1, 27100 Pavia</p>
+                    <p><i class="fas fa-phone"></i> 0382 123456</p>
+                    <p><i class="fas fa-envelope"></i> info@edilpavia.it</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Servizi</h4>
+                    <p><a href="servizi.html">Edili</a></p>
+                    <p><a href="servizi.html">Idraulica</a></p>
+                    <p><a href="servizi.html">Elettricista</a></p>
+                    <p><a href="servizi.html">Giardinaggio</a></p>
+                    <p><a href="servizi.html">Antifurti</a></p>
+                </div>
+                <div class="footer-col">
+                    <h4>Provincia di Pavia</h4>
+                    <p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco, e l'intera provincia.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Seguici</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                    <p style="margin-top:20px;"><i class="fas fa-star" style="color:#f5a623;"></i> Pagamenti sicuri</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 EdilPavia · Tutti i diritti riservati · <a href="#" style="color:#b0c4d9;">Privacy</a> · <a href="#" style="color:#b0c4d9;">Cookie</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
