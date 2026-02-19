@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EdilPavia · Registrati</title>
+    <title>EdilPavia · Accedi o Registrati</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Stili comuni */
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Segoe UI',Roboto,sans-serif; background:#f9fafc; color:#1e2b37; line-height:1.5; }
-        a { text-decoration:none; color:inherit; }
-        .container { max-width:1280px; margin:0 auto; padding:0 24px; }
-        
+        .container { max-width:1280px; margin:0 auto; padding:0 20px; }
         header { background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.02); padding:16px 0; position:sticky; top:0; z-index:10; }
         .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
         .logo { display:flex; align-items:center; gap:8px; font-size:1.8rem; font-weight:600; color:#0b3b5c; }
         .logo i { color:#f5a623; font-size:2.2rem; }
         .nav-links { display:flex; gap:32px; font-weight:500; color:#2c3e50; }
         .nav-links a:hover { color:#0b3b5c; border-bottom:2px solid #f5a623; }
-        .btn-registrati { background:#0b3b5c; color:#fff!important; padding:10px 22px; border-radius:40px; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition:background 0.2s; }
+        .btn-registrati { background:#0b3b5c; color:#fff !important; padding:10px 22px; border-radius:40px; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition:background 0.2s; }
         .btn-registrati:hover { background:#124f73; }
-
         footer { background:#102a37; color:#d0dee9; padding:48px 0 24px; border-radius:40px 40px 0 0; margin-top:60px; }
-        .footer-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px; margin-bottom:40px; }
+        .footer-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:40px; margin-bottom:40px; }
         .footer-col h4 { color:#fff; font-size:1.2rem; margin-bottom:20px; }
         .footer-col p, .footer-col a { color:#b0c4d9; line-height:2; }
         .footer-col i { width:24px; color:#f5a623; }
@@ -30,22 +28,23 @@
         .social-icons a:hover { background:#f5a623; color:#0b3b5c; }
         .copyright { text-align:center; padding-top:32px; border-top:1px solid #2a4a5e; font-size:0.9rem; }
 
-        /* Stili registrazione */
+        /* Stili specifici */
         .auth-page { padding:60px 0; }
-        .auth-container { background:white; border-radius:40px; padding:48px; max-width:500px; margin:0 auto; box-shadow:0 20px 40px rgba(0,0,0,0.03); border:1px solid #eef2f6; }
-        .auth-container h1 { font-size:2rem; color:#0b3b5c; margin-bottom:8px; }
-        .auth-container .subtitle { color:#4a5b68; margin-bottom:32px; }
-        .form-group { margin-bottom:24px; }
-        label { font-weight:600; color:#0b3b5c; display:block; margin-bottom:8px; }
-        input { width:100%; padding:14px 18px; border:1px solid #d0ddee; border-radius:30px; font-size:1rem; background:#f9fafc; transition:0.2s; }
-        input:focus { outline:none; border-color:#f5a623; }
-        .btn-auth { background:#f5a623; color:#0b3b5c; border:none; padding:14px 40px; border-radius:60px; font-weight:700; font-size:1.1rem; cursor:pointer; transition:0.2s; width:100%; margin-top:8px; }
-        .btn-auth:hover { background:#e09112; }
-        .auth-switch { text-align:center; margin-top:24px; }
-        .auth-switch a { color:#f5a623; font-weight:600; }
-        .auth-switch a:hover { text-decoration:underline; }
-
-        @media (max-width:700px){ .header-inner{flex-direction:column;align-items:flex-start;} .nav-links{flex-wrap:wrap;gap:20px;} .auth-container{padding:30px;} }
+        .auth-card { background:white; border-radius:40px; padding:48px; max-width:500px; margin:0 auto; box-shadow:0 20px 40px rgba(0,0,0,0.03); border:1px solid #eef2f6; }
+        .auth-title { font-size:2rem; color:#0b3b5c; text-align:center; margin-bottom:30px; }
+        .tab-buttons { display:flex; gap:10px; margin-bottom:30px; }
+        .tab-btn { flex:1; padding:12px; border:none; background:#eef2f6; border-radius:60px; font-weight:600; cursor:pointer; }
+        .tab-btn.active { background:#0b3b5c; color:white; }
+        .tab-pane { display:none; }
+        .tab-pane.active { display:block; }
+        .form-group { margin-bottom:20px; }
+        label { display:block; margin-bottom:8px; font-weight:600; color:#0b3b5c; }
+        input { width:100%; padding:12px 16px; border:1px solid #d0ddee; border-radius:30px; font-size:1rem; }
+        .btn-submit { background:#f5a623; color:#0b3b5c; border:none; padding:12px 30px; border-radius:60px; font-weight:700; cursor:pointer; transition:0.2s; width:100%; }
+        .btn-submit:hover { background:#e09112; }
+        .alert { padding:15px; border-radius:30px; margin-bottom:20px; }
+        .alert-success { background:#d4edda; color:#155724; border:1px solid #c3e6cb; }
+        .alert-danger { background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; }
     </style>
 </head>
 <body>
@@ -64,25 +63,51 @@
     </header>
 
     <main class="auth-page">
-        <div class="auth-container">
-            <h1>Benvenuto!</h1>
-            <p class="subtitle">Registrati o accedi per ottenere sconti esclusivi.</p>
-            <form>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="tua@email.com" required>
+        <div class="container">
+            <div class="auth-card">
+                <h1 class="auth-title">Benvenuto in EdilPavia</h1>
+
+                <div class="tab-buttons">
+                    <button class="tab-btn active" id="btnLogin">Accedi</button>
+                    <button class="tab-btn" id="btnRegistrati">Registrati</button>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="••••••••" required>
+
+                <!-- Login Tab -->
+                <div class="tab-pane active" id="loginTab">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn-submit">Accedi</button>
+                        <div id="loginFeedback" class="mt-3"></div>
+                    </form>
                 </div>
-                <button type="submit" class="btn-auth">Accedi</button>
-            </form>
-            <div class="auth-switch">
-                Non hai un account? <a href="#">Registrati ora</a>
+
+                <!-- Registrazione Tab -->
+                <div class="tab-pane" id="registratiTab">
+                    <form id="registrazioneForm">
+                        <div class="form-group">
+                            <label>Nome e Cognome</label>
+                            <input type="text" id="regNome" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="regEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="regPassword" required>
+                        </div>
+                        <button type="submit" class="btn-submit">Registrati</button>
+                        <div id="regFeedback" class="mt-3"></div>
+                    </form>
+                </div>
             </div>
-            <hr style="margin:30px 0; border:0; border-top:1px solid #eef2f6;">
-            <p style="text-align:center; font-size:0.9rem; color:#7f8c8d;">Registrandoti riceverai subito un coupon 10% di sconto.</p>
         </div>
     </main>
 
@@ -91,11 +116,65 @@
             <div class="footer-grid">
                 <div class="footer-col"><h4>EdilPavia</h4><p><i class="fas fa-location-dot"></i> Via Roma 1, 27100 Pavia</p><p><i class="fas fa-phone"></i> 0382 123456</p><p><i class="fas fa-envelope"></i> info@edilpavia.it</p></div>
                 <div class="footer-col"><h4>Servizi</h4><p><a href="servizi.html">Edili</a></p><p><a href="servizi.html">Idraulica</a></p><p><a href="servizi.html">Elettricista</a></p><p><a href="servizi.html">Giardinaggio</a></p><p><a href="servizi.html">Antifurti</a></p></div>
-                <div class="footer-col"><h4>Provincia di Pavia</h4><p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco, e l'intera provincia.</p></div>
+                <div class="footer-col"><h4>Provincia di Pavia</h4><p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco.</p></div>
                 <div class="footer-col"><h4>Seguici</h4><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div><p style="margin-top:20px;"><i class="fas fa-star" style="color:#f5a623;"></i> Pagamenti sicuri</p></div>
             </div>
             <div class="copyright">&copy; 2025 EdilPavia · Tutti i diritti riservati · <a href="#" style="color:#b0c4d9;">Privacy</a> · <a href="#" style="color:#b0c4d9;">Cookie</a></div>
         </div>
     </footer>
+
+    <script src="js/utenti-data.js"></script>
+    <script>
+        const btnLogin = document.getElementById('btnLogin');
+        const btnReg = document.getElementById('btnRegistrati');
+        const loginTab = document.getElementById('loginTab');
+        const regTab = document.getElementById('registratiTab');
+        const loginForm = document.getElementById('loginForm');
+        const regForm = document.getElementById('registrazioneForm');
+        const loginFeedback = document.getElementById('loginFeedback');
+        const regFeedback = document.getElementById('regFeedback');
+
+        btnLogin.addEventListener('click', () => {
+            btnLogin.classList.add('active');
+            btnReg.classList.remove('active');
+            loginTab.classList.add('active');
+            regTab.classList.remove('active');
+        });
+        btnReg.addEventListener('click', () => {
+            btnReg.classList.add('active');
+            btnLogin.classList.remove('active');
+            regTab.classList.add('active');
+            loginTab.classList.remove('active');
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            if (loginUtente(email, password)) {
+                loginFeedback.innerHTML = '<div class="alert alert-success">Login effettuato! Reindirizzamento...</div>';
+                setTimeout(() => window.location.href = 'area-riservata.html', 1500);
+            } else {
+                loginFeedback.innerHTML = '<div class="alert alert-danger">Email o password errati.</div>';
+            }
+        });
+
+        regForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('regNome').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            if (registraUtente(email, nome, password)) {
+                regFeedback.innerHTML = '<div class="alert alert-success">Registrazione completata! Ora puoi accedere.</div>';
+                regForm.reset();
+                // Passa alla scheda login dopo 2 secondi
+                setTimeout(() => {
+                    btnLogin.click();
+                }, 2000);
+            } else {
+                regFeedback.innerHTML = '<div class="alert alert-danger">Email già registrata.</div>';
+            }
+        });
+    </script>
 </body>
 </html>
