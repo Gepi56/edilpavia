@@ -6,22 +6,20 @@
     <title>EdilPavia · Area Riservata</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Stili comuni (stessi delle altre pagine) */
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Segoe UI',Roboto,sans-serif; background:#f9fafc; color:#1e2b37; line-height:1.5; }
-        a { text-decoration:none; color:inherit; }
-        .container { max-width:1280px; margin:0 auto; padding:0 24px; }
-        
+        .container { max-width:1280px; margin:0 auto; padding:0 20px; }
         header { background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.02); padding:16px 0; position:sticky; top:0; z-index:10; }
         .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
         .logo { display:flex; align-items:center; gap:8px; font-size:1.8rem; font-weight:600; color:#0b3b5c; }
         .logo i { color:#f5a623; font-size:2.2rem; }
         .nav-links { display:flex; gap:32px; font-weight:500; color:#2c3e50; }
         .nav-links a:hover { color:#0b3b5c; border-bottom:2px solid #f5a623; }
-        .btn-registrati { background:#0b3b5c; color:#fff!important; padding:10px 22px; border-radius:40px; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition:background 0.2s; }
+        .btn-registrati { background:#0b3b5c; color:#fff !important; padding:10px 22px; border-radius:40px; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition:background 0.2s; }
         .btn-registrati:hover { background:#124f73; }
-
         footer { background:#102a37; color:#d0dee9; padding:48px 0 24px; border-radius:40px 40px 0 0; margin-top:60px; }
-        .footer-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px; margin-bottom:40px; }
+        .footer-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:40px; margin-bottom:40px; }
         .footer-col h4 { color:#fff; font-size:1.2rem; margin-bottom:20px; }
         .footer-col p, .footer-col a { color:#b0c4d9; line-height:2; }
         .footer-col i { width:24px; color:#f5a623; }
@@ -30,13 +28,13 @@
         .social-icons a:hover { background:#f5a623; color:#0b3b5c; }
         .copyright { text-align:center; padding-top:32px; border-top:1px solid #2a4a5e; font-size:0.9rem; }
 
-        .private-area { padding:60px 0; text-align:center; }
-        .private-box { background:white; border-radius:40px; padding:48px; max-width:600px; margin:0 auto; box-shadow:0 20px 40px rgba(0,0,0,0.03); }
-        .private-box h1 { color:#0b3b5c; margin-bottom:20px; }
-        .private-box p { color:#4a5b68; margin-bottom:20px; }
-        .btn-disabled { background:#ddd; color:#666; padding:14px 30px; border-radius:60px; border:none; font-weight:600; cursor:not-allowed; }
-
-        @media (max-width:700px){ .header-inner{flex-direction:column;align-items:flex-start;} .nav-links{flex-wrap:wrap;gap:20px;} }
+        /* Stili specifici */
+        .area-page { padding:60px 0; }
+        .area-card { background:white; border-radius:40px; padding:48px; max-width:600px; margin:0 auto; box-shadow:0 20px 40px rgba(0,0,0,0.03); border:1px solid #eef2f6; text-align:center; }
+        .area-title { font-size:2.5rem; color:#0b3b5c; margin-bottom:20px; }
+        .area-subtitle { font-size:1.2rem; color:#4a5b68; margin-bottom:30px; }
+        .sconto-badge { background:#f5a623; color:#0b3b5c; padding:10px 30px; border-radius:60px; font-weight:700; display:inline-block; margin:20px 0; }
+        .btn-logout { background:#dc3545; color:white; border:none; padding:12px 30px; border-radius:60px; font-weight:600; cursor:pointer; }
     </style>
 </head>
 <body>
@@ -54,13 +52,12 @@
         </div>
     </header>
 
-    <main class="private-area">
-        <div class="private-box">
-            <i class="fas fa-user-circle" style="font-size:4rem; color:#f5a623;"></i>
-            <h1>Area Riservata</h1>
-            <p>Questa sezione è in costruzione. Presto potrai visualizzare qui i tuoi preventivi, sconti personalizzati e lo storico richieste.</p>
-            <p>Se sei un utente registrato, riceverai una email quando sarà attiva.</p>
-            <button class="btn-disabled" disabled><i class="fas fa-tools"></i> Funzione non disponibile</button>
+    <main class="area-page">
+        <div class="container">
+            <div class="area-card" id="areaCard">
+                <!-- Contenuto dinamico -->
+                <div style="text-align: center;">Caricamento...</div>
+            </div>
         </div>
     </main>
 
@@ -69,11 +66,45 @@
             <div class="footer-grid">
                 <div class="footer-col"><h4>EdilPavia</h4><p><i class="fas fa-location-dot"></i> Via Roma 1, 27100 Pavia</p><p><i class="fas fa-phone"></i> 0382 123456</p><p><i class="fas fa-envelope"></i> info@edilpavia.it</p></div>
                 <div class="footer-col"><h4>Servizi</h4><p><a href="servizi.html">Edili</a></p><p><a href="servizi.html">Idraulica</a></p><p><a href="servizi.html">Elettricista</a></p><p><a href="servizi.html">Giardinaggio</a></p><p><a href="servizi.html">Antifurti</a></p></div>
-                <div class="footer-col"><h4>Provincia di Pavia</h4><p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco, e l'intera provincia.</p></div>
+                <div class="footer-col"><h4>Provincia di Pavia</h4><p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco.</p></div>
                 <div class="footer-col"><h4>Seguici</h4><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div><p style="margin-top:20px;"><i class="fas fa-star" style="color:#f5a623;"></i> Pagamenti sicuri</p></div>
             </div>
             <div class="copyright">&copy; 2025 EdilPavia · Tutti i diritti riservati · <a href="#" style="color:#b0c4d9;">Privacy</a> · <a href="#" style="color:#b0c4d9;">Cookie</a></div>
         </div>
     </footer>
+
+    <script src="js/utenti-data.js"></script>
+    <script src="js/contenuti-data.js"></script>
+    <script>
+        const areaCard = document.getElementById('areaCard');
+
+        function mostraArea() {
+            const utente = getUtenteCorrente();
+            if (!utente) {
+                areaCard.innerHTML = `
+                    <h1 class="area-title">Accesso negato</h1>
+                    <p class="area-subtitle">Devi effettuare il login per visualizzare quest'area.</p>
+                    <a href="registrazione.html" class="btn-registrati" style="display:inline-block;">Vai al login</a>
+                `;
+                return;
+            }
+
+            const contenuti = getContenuti();
+            areaCard.innerHTML = `
+                <h1 class="area-title">Ciao, ${utente.nome}!</h1>
+                <p class="area-subtitle">Benvenuto nella tua area riservata.</p>
+                <p>Come utente registrato, hai diritto a uno sconto speciale sui nostri servizi.</p>
+                <div class="sconto-badge">Sconto riservato: ${contenuti.scontoRegistrati}%</div>
+                <p style="margin:30px 0;">Usa questo codice quando richiedi un preventivo: <strong>EDILPAVIA10</strong></p>
+                <button class="btn-logout" id="logoutBtn">Esci</button>
+            `;
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                logout();
+                window.location.href = 'index.html';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', mostraArea);
+    </script>
 </body>
 </html>
