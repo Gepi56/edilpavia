@@ -26,7 +26,7 @@
             margin: 0 auto;
             padding: 0 20px;
         }
-        /* Header identico */
+        /* Header */
         header {
             background: #fff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
@@ -78,7 +78,7 @@
         .btn-registrati:hover {
             background: #124f73;
         }
-        /* Footer identico */
+        /* Footer */
         footer {
             background: #102a37;
             color: #d0dee9;
@@ -234,6 +234,16 @@
         .btn-submit:hover {
             background: #e09112;
         }
+        .alert {
+            padding: 15px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
     </style>
 </head>
 <body>
@@ -254,7 +264,7 @@
     <main class="detail-page">
         <div class="container">
             <div class="detail-card" id="detailCard">
-                <!-- Contenuto caricato da JavaScript -->
+                <!-- Il contenuto viene inserito da JavaScript -->
                 <div style="text-align: center;">Caricamento...</div>
             </div>
         </div>
@@ -263,20 +273,53 @@
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col"><h4>EdilPavia</h4><p><i class="fas fa-location-dot"></i> Via Roma 1, 27100 Pavia</p><p><i class="fas fa-phone"></i> 0382 123456</p><p><i class="fas fa-envelope"></i> info@edilpavia.it</p></div>
-                <div class="footer-col"><h4>Servizi</h4><p><a href="servizi.html">Edili</a></p><p><a href="servizi.html">Idraulica</a></p><p><a href="servizi.html">Elettricista</a></p><p><a href="servizi.html">Giardinaggio</a></p><p><a href="servizi.html">Antifurti</a></p></div>
-                <div class="footer-col"><h4>Provincia di Pavia</h4><p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco.</p></div>
-                <div class="footer-col"><h4>Seguici</h4><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div><p style="margin-top:20px;"><i class="fas fa-star" style="color:#f5a623;"></i> Pagamenti sicuri</p></div>
+                <div class="footer-col">
+                    <h4>EdilPavia</h4>
+                    <p><i class="fas fa-location-dot"></i> <span id="footerIndirizzo">Via Roma 1, 27100 Pavia</span></p>
+                    <p><i class="fas fa-phone"></i> <span id="footerTelefono">0382 123456</span></p>
+                    <p><i class="fas fa-envelope"></i> <span id="footerEmail">info@edilpavia.it</span></p>
+                </div>
+                <div class="footer-col">
+                    <h4>Servizi</h4>
+                    <p><a href="servizi.html">Edili</a></p>
+                    <p><a href="servizi.html">Idraulica</a></p>
+                    <p><a href="servizi.html">Elettricista</a></p>
+                    <p><a href="servizi.html">Giardinaggio</a></p>
+                    <p><a href="servizi.html">Antifurti</a></p>
+                </div>
+                <div class="footer-col">
+                    <h4>Provincia di Pavia</h4>
+                    <p>Operiamo a Pavia città e in tutti i comuni: Vigevano, Voghera, Mortara, Stradella, Broni, Casteggio, Garlasco.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Seguici</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                    <p style="margin-top:20px;"><i class="fas fa-star" style="color:#f5a623;"></i> Pagamenti sicuri</p>
+                </div>
             </div>
             <div class="copyright">&copy; 2025 EdilPavia · Tutti i diritti riservati · <a href="#" style="color:#b0c4d9;">Privacy</a> · <a href="#" style="color:#b0c4d9;">Cookie</a></div>
         </div>
     </footer>
 
     <script src="js/servizi-data.js"></script>
+    <script src="js/richieste-data.js"></script>
+    <script src="js/contenuti-data.js"></script>
     <script>
+        // Aggiorna footer con dati dinamici
+        (function() {
+            const c = getContenuti();
+            document.getElementById('footerTelefono').innerText = c.contattiTelefono;
+            document.getElementById('footerEmail').innerText = c.contattiEmail;
+            document.getElementById('footerIndirizzo').innerText = c.contattiIndirizzo;
+        })();
+
+        // Dettaglio servizio
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
-
         const detailCard = document.getElementById('detailCard');
 
         function mostraDettaglio() {
@@ -301,7 +344,7 @@
                 return;
             }
 
-            // Costruisci galleria immagini
+            // Galleria immagini
             let immaginiHtml = '';
             if (servizio.immagini && servizio.immagini.length > 0) {
                 immaginiHtml = '<div class="images-gallery">';
@@ -314,7 +357,7 @@
             // Prezzo
             const prezzoHtml = servizio.prezzo ? `<div class="detail-price">💰 ${servizio.prezzo}</div>` : '';
 
-            // Form preventivo (precompilato con titolo)
+            // Form preventivo
             const formHtml = `
                 <div class="quick-form">
                     <h3>Richiedi preventivo per ${servizio.titolo}</h3>
@@ -338,6 +381,7 @@
                         </div>
                         <button type="submit" class="btn-submit">Invia richiesta</button>
                     </form>
+                    <div id="formFeedback" class="mt-3"></div>
                 </div>
             `;
 
@@ -352,15 +396,23 @@
                 <a href="servizi.html" class="back-link"><i class="fas fa-arrow-left"></i> Torna ai servizi</a>
             `;
 
-            // Gestione invio form (esempio alert)
+            // Gestione invio form
             const form = document.getElementById('formPreventivo');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    alert('Richiesta inviata (simulazione). A breve integreremo l\'invio reale.');
-                    // Qui potresti salvare la richiesta in localStorage per l'admin
-                });
-            }
+            const feedback = document.getElementById('formFeedback');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+                const richiesta = {
+                    servizio: formData.get('servizio'),
+                    nome: formData.get('nome'),
+                    email: formData.get('email'),
+                    telefono: formData.get('telefono'),
+                    messaggio: formData.get('messaggio')
+                };
+                aggiungiRichiesta(richiesta);
+                feedback.innerHTML = '<div class="alert alert-success">Richiesta inviata con successo! Ti contatteremo presto.</div>';
+                form.reset();
+            });
         }
 
         document.addEventListener('DOMContentLoaded', mostraDettaglio);
