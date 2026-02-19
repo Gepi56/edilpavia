@@ -8,6 +8,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Chart.js per statistiche -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       background: #f4f7fc;
@@ -27,9 +29,34 @@
       color: #f5a623;
       margin-right: 10px;
     }
-    .table-container {
+    .logout-btn {
+      background: transparent;
+      border: 1px solid #f5a623;
+      color: #f5a623;
+      border-radius: 40px;
+      padding: 8px 20px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .logout-btn:hover {
+      background: #f5a623;
+      color: #0b3b5c;
+    }
+    .nav-tabs .nav-link {
+      color: #0b3b5c;
+      font-weight: 600;
+      border: none;
+      padding: 12px 25px;
+    }
+    .nav-tabs .nav-link.active {
+      background: #0b3b5c;
+      color: white;
+      border-radius: 40px 40px 0 0;
+    }
+    .tab-content {
       background: white;
-      border-radius: 20px;
+      border-radius: 0 20px 20px 20px;
       padding: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
@@ -62,12 +89,8 @@
       padding: 5px 15px;
       font-weight: 600;
     }
-    .modal-header {
-      background: #0b3b5c;
-      color: white;
-    }
-    .modal-header .btn-close {
-      filter: brightness(0) invert(1);
+    .btn-sm {
+      font-size: 0.85rem;
     }
     .preview-container {
       display: flex;
@@ -102,45 +125,264 @@
       line-height: 1;
       cursor: pointer;
     }
+    .stat-card {
+      background: #f8f9fa;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #e9ecef;
+    }
+    .stat-card h3 {
+      font-size: 2rem;
+      color: #0b3b5c;
+    }
   </style>
 </head>
 <body>
 
   <div class="admin-header">
-    <div class="container">
+    <div class="container d-flex justify-content-between align-items-center">
       <h1><i class="fas fa-cogs"></i> Pannello di Amministrazione</h1>
-      <p class="mb-0">Gestione servizi · EdilPavia</p>
+      <a href="index.html" class="logout-btn"><i class="fas fa-sign-out-alt me-2"></i>Esci</a>
     </div>
   </div>
 
   <div class="container">
-    <div class="table-container">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3><i class="fas fa-list me-2"></i>Elenco servizi</h3>
-        <button class="btn-add" data-bs-toggle="modal" data-bs-target="#addModal">
-          <i class="fas fa-plus me-2"></i>Nuovo servizio
-        </button>
+    <!-- Tabs di navigazione -->
+    <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="servizi-tab" data-bs-toggle="tab" data-bs-target="#servizi" type="button" role="tab"><i class="fas fa-list me-2"></i>Servizi</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="richieste-tab" data-bs-toggle="tab" data-bs-target="#richieste" type="button" role="tab"><i class="fas fa-envelope me-2"></i>Richieste preventivo</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contenuti-tab" data-bs-toggle="tab" data-bs-target="#contenuti" type="button" role="tab"><i class="fas fa-edit me-2"></i>Contenuti statici</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="utenti-tab" data-bs-toggle="tab" data-bs-target="#utenti" type="button" role="tab"><i class="fas fa-users me-2"></i>Utenti registrati</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="statistiche-tab" data-bs-toggle="tab" data-bs-target="#statistiche" type="button" role="tab"><i class="fas fa-chart-bar me-2"></i>Statistiche</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="adminTabContent">
+
+      <!-- TAB SERVIZI (già esistente, ora integrato) -->
+      <div class="tab-pane fade show active" id="servizi" role="tabpanel">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3><i class="fas fa-list me-2"></i>Elenco servizi</h3>
+          <button class="btn-add" data-bs-toggle="modal" data-bs-target="#addModal">
+            <i class="fas fa-plus me-2"></i>Nuovo servizio
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Icona</th>
+                <th>Titolo</th>
+                <th>Descrizione breve</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody id="serviziTableBody"></tbody>
+          </table>
+        </div>
       </div>
 
-      <div class="table-responsive">
-        <table class="table table-hover align-middle">
-          <thead>
-            <tr>
-              <th>Icona</th>
-              <th>Titolo</th>
-              <th>Descrizione breve</th>
-              <th>Azioni</th>
-            </tr>
-          </thead>
-          <tbody id="serviziTableBody">
-            <!-- Popolato via JS -->
-          </tbody>
-        </table>
+      <!-- TAB RICHIESTE PREVENTIVO -->
+      <div class="tab-pane fade" id="richieste" role="tabpanel">
+        <h3 class="mb-4"><i class="fas fa-envelope me-2"></i>Richieste di preventivo</h3>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Servizio</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Stato</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody id="richiesteTableBody"></tbody>
+          </table>
+        </div>
+        <!-- Modal per gestire stato e note richiesta -->
+        <div class="modal fade" id="richiestaModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Dettaglio richiesta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" id="richiestaId">
+                <div class="mb-3">
+                  <label class="form-label">Stato</label>
+                  <select class="form-select" id="richiestaStato">
+                    <option value="Nuova">Nuova</option>
+                    <option value="Contattato">Contattato</option>
+                    <option value="Chiuso">Chiuso</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Note interne</label>
+                  <textarea class="form-control" id="richiestaNote" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                <button type="button" class="btn btn-primary" id="salvaRichiesta">Salva modifiche</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB CONTENUTI STATICI -->
+      <div class="tab-pane fade" id="contenuti" role="tabpanel">
+        <h3 class="mb-4"><i class="fas fa-edit me-2"></i>Modifica contenuti statici</h3>
+        <form id="contenutiForm">
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Homepage</h5>
+              <div class="mb-3">
+                <label class="form-label">Titolo principale</label>
+                <input type="text" class="form-control" id="homeTitolo">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Sottotitolo</label>
+                <input type="text" class="form-control" id="homeSottotitolo">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Testo introduttivo</label>
+                <textarea class="form-control" id="homeTesto" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h5>Contatti</h5>
+              <div class="mb-3">
+                <label class="form-label">Telefono</label>
+                <input type="text" class="form-control" id="contattiTelefono">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="contattiEmail">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Indirizzo</label>
+                <input type="text" class="form-control" id="contattiIndirizzo">
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <h5>Sconto registrati</h5>
+              <div class="mb-3">
+                <label class="form-label">Percentuale sconto</label>
+                <input type="number" class="form-control" id="scontoRegistrati" min="0" max="100" step="1">
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary mt-3" id="salvaContenuti">Salva modifiche</button>
+        </form>
+      </div>
+
+      <!-- TAB UTENTI REGISTRATI (simulati) -->
+      <div class="tab-pane fade" id="utenti" role="tabpanel">
+        <h3 class="mb-4"><i class="fas fa-users me-2"></i>Utenti registrati</h3>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Nome</th>
+                <th>Data registrazione</th>
+                <th>Stato</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody id="utentiTableBody"></tbody>
+          </table>
+        </div>
+        <!-- Modal per modificare utente -->
+        <div class="modal fade" id="utenteModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modifica utente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" id="utenteId">
+                <div class="mb-3">
+                  <label class="form-label">Attivo</label>
+                  <select class="form-select" id="utenteAttivo">
+                    <option value="true">Attivo</option>
+                    <option value="false">Disattivo</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                <button type="button" class="btn btn-primary" id="salvaUtente">Salva</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB STATISTICHE -->
+      <div class="tab-pane fade" id="statistiche" role="tabpanel">
+        <h3 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Statistiche</h3>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-hard-hat fa-2x mb-2" style="color: #f5a623;"></i>
+              <h3 id="statServizi">0</h3>
+              <p>Servizi attivi</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-envelope fa-2x mb-2" style="color: #f5a623;"></i>
+              <h3 id="statRichieste">0</h3>
+              <p>Richieste totali</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-users fa-2x mb-2" style="color: #f5a623;"></i>
+              <h3 id="statUtenti">0</h3>
+              <p>Utenti registrati</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-percent fa-2x mb-2" style="color: #f5a623;"></i>
+              <h3 id="statSconto">10%</h3>
+              <p>Sconto attuale</p>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-6">
+            <canvas id="chartRichiestePerServizio" width="400" height="200"></canvas>
+          </div>
+          <div class="col-md-6">
+            <canvas id="chartAndamento" width="400" height="200"></canvas>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- MODALE AGGIUNTA -->
+  <!-- MODAL SERVIZI (già presenti, li includo per completezza) -->
+  <!-- MODALE AGGIUNTA SERVIZIO -->
   <div class="modal fade" id="addModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -186,7 +428,7 @@
     </div>
   </div>
 
-  <!-- MODALE MODIFICA -->
+  <!-- MODALE MODIFICA SERVIZIO -->
   <div class="modal fade" id="editModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -238,24 +480,86 @@
   <script src="js/servizi-data.js"></script>
   <script>
     (function() {
-      // Riferimenti ai modali
-      const addModalEl = document.getElementById('addModal');
-      const editModalEl = document.getElementById('editModal');
-      let addModal, editModal;
+      // ********** DATI GLOBALI **********
+      const RICHIESTE_KEY = 'edilpavia_richieste';
+      const CONTENUTI_KEY = 'edilpavia_contenuti';
+      const UTENTI_KEY = 'edilpavia_utenti';
 
-      // Inizializza modali Bootstrap
-      if (addModalEl) addModal = new bootstrap.Modal(addModalEl);
-      if (editModalEl) editModal = new bootstrap.Modal(editModalEl);
+      // Dati di default
+      const defaultContenuti = {
+        homeTitolo: 'EdilPavia - Costruzioni e Ristrutturazioni',
+        homeSottotitolo: 'Da oltre 20 anni al servizio della provincia di Pavia',
+        homeTesto: 'EdilPavia è un\'impresa edile specializzata in ristrutturazioni, nuove costruzioni e manutenzioni. Operiamo con professionalità e trasparenza.',
+        contattiTelefono: '0382 123456',
+        contattiEmail: 'info@edilpavia.it',
+        contattiIndirizzo: 'Via Roma 1, 27100 Pavia',
+        scontoRegistrati: 10
+      };
 
-      // Elementi DOM
-      const tbody = document.getElementById('serviziTableBody');
-      const addForm = document.getElementById('addForm');
-      const editForm = document.getElementById('editForm');
+      const defaultUtenti = [
+        { id: 'u1', email: 'mario.rossi@example.com', nome: 'Mario Rossi', dataReg: '2025-01-15', attivo: true },
+        { id: 'u2', email: 'luca.bianchi@example.com', nome: 'Luca Bianchi', dataReg: '2025-02-20', attivo: true },
+        { id: 'u3', email: 'giulia.verdi@example.com', nome: 'Giulia Verdi', dataReg: '2025-03-10', attivo: false }
+      ];
 
-      // Funzione per aggiornare la tabella
+      // ********** FUNZIONI DI LETTURA/SCRITTURA DATI **********
+      function getRichieste() {
+        let data = localStorage.getItem(RICHIESTE_KEY);
+        if (!data) return [];
+        return JSON.parse(data);
+      }
+      function saveRichieste(richieste) {
+        localStorage.setItem(RICHIESTE_KEY, JSON.stringify(richieste));
+      }
+
+      function getContenuti() {
+        let data = localStorage.getItem(CONTENUTI_KEY);
+        if (!data) {
+          saveContenuti(defaultContenuti);
+          return defaultContenuti;
+        }
+        return JSON.parse(data);
+      }
+      function saveContenuti(contenuti) {
+        localStorage.setItem(CONTENUTI_KEY, JSON.stringify(contenuti));
+      }
+
+      function getUtenti() {
+        let data = localStorage.getItem(UTENTI_KEY);
+        if (!data) {
+          saveUtenti(defaultUtenti);
+          return defaultUtenti;
+        }
+        return JSON.parse(data);
+      }
+      function saveUtenti(utenti) {
+        localStorage.setItem(UTENTI_KEY, JSON.stringify(utenti));
+      }
+
+      // ********** GESTIONE SERVIZI (già presente in servizi-data.js, ma riporto funzioni per completezza) **********
+      function getServizi() {
+        return window.getServizi ? window.getServizi() : [];
+      }
+      function saveServizi(servizi) {
+        if (window.saveServizi) window.saveServizi(servizi);
+      }
+
+      // ********** INIZIALIZZAZIONE TABELLE E FORM **********
+      const tbodyServizi = document.getElementById('serviziTableBody');
+      const tbodyRichieste = document.getElementById('richiesteTableBody');
+      const tbodyUtenti = document.getElementById('utentiTableBody');
+
+      // Modali
+      let addModal, editModal, richiestaModal, utenteModal;
+      if (document.getElementById('addModal')) addModal = new bootstrap.Modal(document.getElementById('addModal'));
+      if (document.getElementById('editModal')) editModal = new bootstrap.Modal(document.getElementById('editModal'));
+      if (document.getElementById('richiestaModal')) richiestaModal = new bootstrap.Modal(document.getElementById('richiestaModal'));
+      if (document.getElementById('utenteModal')) utenteModal = new bootstrap.Modal(document.getElementById('utenteModal'));
+
+      // ********** SERVIZI **********
       function caricaServizi() {
         const servizi = getServizi();
-        tbody.innerHTML = '';
+        tbodyServizi.innerHTML = '';
         servizi.forEach(s => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
@@ -267,61 +571,10 @@
               <button class="btn-delete btn-sm" onclick="eliminaServizio('${s.id}')"><i class="fas fa-trash"></i> Elimina</button>
             </td>
           `;
-          tbody.appendChild(tr);
+          tbodyServizi.appendChild(tr);
         });
       }
 
-      // Funzione per mostrare anteprime immagini da textarea
-      function aggiornaPreview(textareaId, previewId) {
-        const textarea = document.getElementById(textareaId);
-        const preview = document.getElementById(previewId);
-        if (!textarea || !preview) return;
-        const urls = textarea.value.split('\n').map(u => u.trim()).filter(u => u !== '');
-        preview.innerHTML = urls.map((url, index) => `
-          <div class="preview-item">
-            <img src="${url}" onerror="this.parentElement.style.display='none'">
-            <button class="remove-img" type="button" onclick="rimuoviUrl('${textareaId}', '${previewId}', ${index})">&times;</button>
-          </div>
-        `).join('');
-      }
-
-      // Rimuovere un URL dal textarea e aggiornare preview
-      window.rimuoviUrl = function(textareaId, previewId, index) {
-        const textarea = document.getElementById(textareaId);
-        let urls = textarea.value.split('\n').map(u => u.trim()).filter(u => u !== '');
-        urls.splice(index, 1);
-        textarea.value = urls.join('\n');
-        aggiornaPreview(textareaId, previewId);
-      };
-
-      // Inizializza ascoltatori per i textarea delle immagini
-      function initTextareaListeners() {
-        ['addImmagini', 'editImmagini'].forEach(id => {
-          const ta = document.getElementById(id);
-          if (ta) {
-            ta.addEventListener('input', function() {
-              const previewId = id === 'addImmagini' ? 'addPreview' : 'editPreview';
-              aggiornaPreview(id, previewId);
-            });
-          }
-        });
-
-        // Pulsanti "Aggiungi riga"
-        document.getElementById('addAggiungiUrl')?.addEventListener('click', function() {
-          const ta = document.getElementById('addImmagini');
-          ta.value += '\n';
-          ta.focus();
-          aggiornaPreview('addImmagini', 'addPreview');
-        });
-        document.getElementById('editAggiungiUrl')?.addEventListener('click', function() {
-          const ta = document.getElementById('editImmagini');
-          ta.value += '\n';
-          ta.focus();
-          aggiornaPreview('editImmagini', 'editPreview');
-        });
-      }
-
-      // Apri modale di modifica con i dati del servizio
       window.modificaServizio = function(id) {
         const servizi = getServizi();
         const s = servizi.find(s => s.id === id);
@@ -332,19 +585,24 @@
         document.getElementById('editTitolo').value = s.titolo || s.title || '';
         document.getElementById('editDescBreve').value = s.descrizioneBreve || s.desc || '';
         document.getElementById('editDescEstesa').value = s.descrizioneEstesa || '';
-        // Immagini: array -> testo (uno per riga)
         const immagini = s.immagini || [];
         document.getElementById('editImmagini').value = immagini.join('\n');
         document.getElementById('editPrezzo').value = s.prezzo || '';
-
-        // Aggiorna anteprime
         aggiornaPreview('editImmagini', 'editPreview');
-
         editModal.show();
       };
 
-      // Salva modifiche
-      document.getElementById('salvaModifiche').addEventListener('click', function() {
+      window.eliminaServizio = function(id) {
+        if (confirm('Sei sicuro di voler eliminare questo servizio?')) {
+          if (window.eliminaServizio && eliminaServizio(id)) {
+            caricaServizi();
+          } else {
+            alert('Errore nell\'eliminazione');
+          }
+        }
+      };
+
+      document.getElementById('salvaModifiche')?.addEventListener('click', function() {
         const id = document.getElementById('editId').value;
         const icona = document.getElementById('editIcona').value;
         const titolo = document.getElementById('editTitolo').value;
@@ -364,7 +622,7 @@
           prezzo: prezzo
         };
 
-        if (aggiornaServizio(servizioAggiornato)) {
+        if (window.aggiornaServizio && aggiornaServizio(servizioAggiornato)) {
           editModal.hide();
           caricaServizi();
         } else {
@@ -372,8 +630,7 @@
         }
       });
 
-      // Salva nuovo servizio
-      document.getElementById('salvaNuovo').addEventListener('click', function() {
+      document.getElementById('salvaNuovo')?.addEventListener('click', function() {
         const icona = document.getElementById('addIcona').value;
         const titolo = document.getElementById('addTitolo').value;
         const descBreve = document.getElementById('addDescBreve').value;
@@ -391,33 +648,259 @@
           prezzo: prezzo
         };
 
-        aggiungiServizio(nuovoServizio);
-        addModal.hide();
-        addForm.reset();
-        document.getElementById('addPreview').innerHTML = ''; // pulisci anteprime
-        caricaServizi();
+        if (window.aggiungiServizio) {
+          aggiungiServizio(nuovoServizio);
+          addModal.hide();
+          document.getElementById('addForm').reset();
+          document.getElementById('addPreview').innerHTML = '';
+          caricaServizi();
+        } else {
+          alert('Funzione aggiungiServizio non disponibile');
+        }
       });
 
-      // Elimina servizio
-      window.eliminaServizio = function(id) {
-        if (confirm('Sei sicuro di voler eliminare questo servizio?')) {
-          if (eliminaServizio(id)) {
-            caricaServizi();
-          }
-        }
+      // Anteprime immagini
+      function aggiornaPreview(textareaId, previewId) {
+        const textarea = document.getElementById(textareaId);
+        const preview = document.getElementById(previewId);
+        if (!textarea || !preview) return;
+        const urls = textarea.value.split('\n').map(u => u.trim()).filter(u => u !== '');
+        preview.innerHTML = urls.map((url, index) => `
+          <div class="preview-item">
+            <img src="${url}" onerror="this.parentElement.style.display='none'">
+            <button class="remove-img" type="button" onclick="rimuoviUrl('${textareaId}', '${previewId}', ${index})">&times;</button>
+          </div>
+        `).join('');
+      }
+
+      window.rimuoviUrl = function(textareaId, previewId, index) {
+        const textarea = document.getElementById(textareaId);
+        let urls = textarea.value.split('\n').map(u => u.trim()).filter(u => u !== '');
+        urls.splice(index, 1);
+        textarea.value = urls.join('\n');
+        aggiornaPreview(textareaId, previewId);
       };
 
-      // All'avvio
+      function initTextareaListeners() {
+        ['addImmagini', 'editImmagini'].forEach(id => {
+          const ta = document.getElementById(id);
+          if (ta) {
+            ta.addEventListener('input', function() {
+              const previewId = id === 'addImmagini' ? 'addPreview' : 'editPreview';
+              aggiornaPreview(id, previewId);
+            });
+          }
+        });
+        document.getElementById('addAggiungiUrl')?.addEventListener('click', function() {
+          const ta = document.getElementById('addImmagini');
+          ta.value += '\n';
+          ta.focus();
+          aggiornaPreview('addImmagini', 'addPreview');
+        });
+        document.getElementById('editAggiungiUrl')?.addEventListener('click', function() {
+          const ta = document.getElementById('editImmagini');
+          ta.value += '\n';
+          ta.focus();
+          aggiornaPreview('editImmagini', 'editPreview');
+        });
+      }
+
+      // ********** RICHIESTE PREVENTIVO **********
+      function caricaRichieste() {
+        const richieste = getRichieste();
+        tbodyRichieste.innerHTML = '';
+        richieste.sort((a,b) => new Date(b.data) - new Date(a.data)).forEach(r => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${new Date(r.data).toLocaleDateString('it-IT')}</td>
+            <td>${r.servizio}</td>
+            <td>${r.nome}</td>
+            <td>${r.email}</td>
+            <td>${r.telefono || '-'}</td>
+            <td><span class="badge ${r.stato === 'Chiuso' ? 'bg-success' : r.stato === 'Contattato' ? 'bg-warning' : 'bg-danger'}">${r.stato || 'Nuova'}</span></td>
+            <td>
+              <button class="btn-edit btn-sm" onclick="modificaRichiesta('${r.id}')"><i class="fas fa-pen"></i> Dettaglio</button>
+            </td>
+          `;
+          tbodyRichieste.appendChild(tr);
+        });
+      }
+
+      window.modificaRichiesta = function(id) {
+        const richieste = getRichieste();
+        const r = richieste.find(r => r.id === id);
+        if (!r) return;
+        document.getElementById('richiestaId').value = r.id;
+        document.getElementById('richiestaStato').value = r.stato || 'Nuova';
+        document.getElementById('richiestaNote').value = r.note || '';
+        richiestaModal.show();
+      };
+
+      document.getElementById('salvaRichiesta')?.addEventListener('click', function() {
+        const id = document.getElementById('richiestaId').value;
+        const stato = document.getElementById('richiestaStato').value;
+        const note = document.getElementById('richiestaNote').value;
+        const richieste = getRichieste();
+        const index = richieste.findIndex(r => r.id === id);
+        if (index !== -1) {
+          richieste[index].stato = stato;
+          richieste[index].note = note;
+          saveRichieste(richieste);
+          caricaRichieste();
+          richiestaModal.hide();
+        }
+      });
+
+      // ********** CONTENUTI STATICI **********
+      function caricaContenuti() {
+        const c = getContenuti();
+        document.getElementById('homeTitolo').value = c.homeTitolo || '';
+        document.getElementById('homeSottotitolo').value = c.homeSottotitolo || '';
+        document.getElementById('homeTesto').value = c.homeTesto || '';
+        document.getElementById('contattiTelefono').value = c.contattiTelefono || '';
+        document.getElementById('contattiEmail').value = c.contattiEmail || '';
+        document.getElementById('contattiIndirizzo').value = c.contattiIndirizzo || '';
+        document.getElementById('scontoRegistrati').value = c.scontoRegistrati || 10;
+      }
+
+      document.getElementById('salvaContenuti')?.addEventListener('click', function() {
+        const nuoviContenuti = {
+          homeTitolo: document.getElementById('homeTitolo').value,
+          homeSottotitolo: document.getElementById('homeSottotitolo').value,
+          homeTesto: document.getElementById('homeTesto').value,
+          contattiTelefono: document.getElementById('contattiTelefono').value,
+          contattiEmail: document.getElementById('contattiEmail').value,
+          contattiIndirizzo: document.getElementById('contattiIndirizzo').value,
+          scontoRegistrati: parseInt(document.getElementById('scontoRegistrati').value) || 10
+        };
+        saveContenuti(nuoviContenuti);
+        alert('Contenuti salvati con successo!');
+        aggiornaStatistiche(); // aggiorna eventuale sconto nelle stats
+      });
+
+      // ********** UTENTI REGISTRATI **********
+      function caricaUtenti() {
+        const utenti = getUtenti();
+        tbodyUtenti.innerHTML = '';
+        utenti.forEach(u => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${u.email}</td>
+            <td>${u.nome}</td>
+            <td>${u.dataReg}</td>
+            <td><span class="badge ${u.attivo ? 'bg-success' : 'bg-secondary'}">${u.attivo ? 'Attivo' : 'Disattivo'}</span></td>
+            <td>
+              <button class="btn-edit btn-sm" onclick="modificaUtente('${u.id}')"><i class="fas fa-pen"></i> Modifica</button>
+            </td>
+          `;
+          tbodyUtenti.appendChild(tr);
+        });
+      }
+
+      window.modificaUtente = function(id) {
+        const utenti = getUtenti();
+        const u = utenti.find(u => u.id === id);
+        if (!u) return;
+        document.getElementById('utenteId').value = u.id;
+        document.getElementById('utenteAttivo').value = u.attivo ? 'true' : 'false';
+        utenteModal.show();
+      };
+
+      document.getElementById('salvaUtente')?.addEventListener('click', function() {
+        const id = document.getElementById('utenteId').value;
+        const attivo = document.getElementById('utenteAttivo').value === 'true';
+        const utenti = getUtenti();
+        const index = utenti.findIndex(u => u.id === id);
+        if (index !== -1) {
+          utenti[index].attivo = attivo;
+          saveUtenti(utenti);
+          caricaUtenti();
+          utenteModal.hide();
+        }
+      });
+
+      // ********** STATISTICHE **********
+      let chart1, chart2;
+
+      function aggiornaStatistiche() {
+        const servizi = getServizi();
+        const richieste = getRichieste();
+        const utenti = getUtenti();
+        const contenuti = getContenuti();
+
+        document.getElementById('statServizi').innerText = servizi.length;
+        document.getElementById('statRichieste').innerText = richieste.length;
+        document.getElementById('statUtenti').innerText = utenti.length;
+        document.getElementById('statSconto').innerText = contenuti.scontoRegistrati + '%';
+
+        // Grafico richieste per servizio
+        const serviziCount = {};
+        richieste.forEach(r => {
+          serviziCount[r.servizio] = (serviziCount[r.servizio] || 0) + 1;
+        });
+        const labels = Object.keys(serviziCount);
+        const data = Object.values(serviziCount);
+
+        if (chart1) chart1.destroy();
+        const ctx1 = document.getElementById('chartRichiestePerServizio').getContext('2d');
+        chart1 = new Chart(ctx1, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Richieste per servizio',
+              data: data,
+              backgroundColor: '#f5a623'
+            }]
+          }
+        });
+
+        // Andamento temporale (per mese) - semplice esempio
+        const mesi = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+        const countPerMese = Array(12).fill(0);
+        richieste.forEach(r => {
+          const mese = new Date(r.data).getMonth();
+          countPerMese[mese]++;
+        });
+        if (chart2) chart2.destroy();
+        const ctx2 = document.getElementById('chartAndamento').getContext('2d');
+        chart2 = new Chart(ctx2, {
+          type: 'line',
+          data: {
+            labels: mesi,
+            datasets: [{
+              label: 'Richieste per mese',
+              data: countPerMese,
+              borderColor: '#0b3b5c',
+              fill: false
+            }]
+          }
+        });
+      }
+
+      // ********** INIZIALIZZAZIONE GENERALE **********
       document.addEventListener('DOMContentLoaded', function() {
         caricaServizi();
+        caricaRichieste();
+        caricaContenuti();
+        caricaUtenti();
+        aggiornaStatistiche();
         initTextareaListeners();
 
         // Pulisci form aggiunta quando si chiude il modal
-        addModalEl.addEventListener('hidden.bs.modal', function() {
-          addForm.reset();
-          document.getElementById('addPreview').innerHTML = '';
-        });
+        const addModalEl = document.getElementById('addModal');
+        if (addModalEl) {
+          addModalEl.addEventListener('hidden.bs.modal', function() {
+            document.getElementById('addForm').reset();
+            document.getElementById('addPreview').innerHTML = '';
+          });
+        }
       });
+
+      // Esponi funzioni globali necessarie per i pulsanti onclick
+      window.caricaRichieste = caricaRichieste;
+      window.caricaUtenti = caricaUtenti;
+      window.aggiornaStatistiche = aggiornaStatistiche;
     })();
   </script>
 </body>
